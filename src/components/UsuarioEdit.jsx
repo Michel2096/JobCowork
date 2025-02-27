@@ -66,7 +66,10 @@ const UsuarioEdit = () => {
                 </div>
                 <button type="submit">Actualizar</button>
             </form>
-            <Link to="/userlist">Regresar</Link>
+
+            <Link to="/userlist">
+            <button>Regresar</button>
+            </Link>
         </div>
     );
 }

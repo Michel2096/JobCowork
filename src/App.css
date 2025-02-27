@@ -590,7 +590,7 @@ p {
   color: #333333;
 }
 .section8 {
-  width: 100%;
+  width: 99%;
   height: 10vh;
   --s: 100px;
   --c1: #000000;
@@ -659,9 +659,13 @@ p {
   font-weight: bold;
   margin-right: 10px;
 }
+
+/* Fondo de la credencial */
+
+/* Fondo de la credencial */
 .credencial {
-  width: 97%;
-  height: 99vh;
+  width: 100%;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -689,63 +693,147 @@ p {
     var(--c1) 76% 84%, var(--c2) 86% 94%;
 }
 
-.credencial-card {
-  width: 350px;
-  padding: 20px;
-  background: #ffffff;
-  border-radius: 15px;
-  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.3);
-  text-align: center;
+/* Estilos para el navbar */
+.navbar {
+  width: 100%;
+  background: var(--c2); /* Fondo oscuro para el navbar */
+  padding: 15px 5px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
 }
 
-.credencial-card img {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  border: 2px solid #f5f2f2;
-  object-fit: cover;
+.navbar-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.credencial-card p {
-  margin: 5px 0;
-  font-size: 16px;
-  color: #333;
+/* Estilos específicos para la sección izquierda del navbar */
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 25px; /* Espacio entre la imagen y el texto */
+  background-color: transparent; /* Fondo transparente */
+  padding: 0; /* Sin padding */
+  margin: 0; /* Sin margen */
 }
 
-.credencial-card strong {
-  font-weight: bold;
+.navbar h2 {
+  color: #fff;
+  margin: 0; /* Elimina el margen del título */
+  padding: 0; /* Elimina el padding del título */
 }
 
-.credencial-card a {
-  display: inline-block;
-  margin-top: 10px;
-  padding: 8px 15px;
-  background: #1a1818;
-  border-radius: 5px;
-  color: white;
-  text-decoration: none;
-  font-size: 14px;
-  transition: background 0.3s;
+.roles-buttons {
+  display: flex;
+  gap: 10px; 
 }
 
-.credencial-card a:hover {
-  background: #333;
-}
-
-.credencial h2 {
-  color: #000;
-
-}
-
-.btn3{
-  background-color: rgb(230, 213, 230);
-  color: #0d0a0d;
+.role-button {
+  background-color: var(--c2); /* Fondo oscuro para los botones */
+  border: none;
+  color: #fff;
   font-family: 'Times New Roman', Times, serif;
-  font-size: 15px;
-  border: 2px solid #a8e215;
-  padding: 2px 10px;
-  margin: 10px;
+  font-size: 17px;
+  padding: 5px 15px;
   cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease;
   border-radius: 8px;
+}
+
+.user-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid #f5f2f2; /* Borde blanco para la imagen */
+  object-fit: cover;
+  cursor: pointer;
+}   
+
+.logout-button {
+  border-radius: 15px;
+  background-color: #ee1212;
+  color: #ffffff;
+  font-family: 'Times New Roman', Times, serif;
+  width: 8%;
+  height: 40px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  border: none;
+}
+
+.logout-button:hover {
+  background-color: #f84444;
+  color: #fff;
+}
+
+/* Estilos para el contenido principal */
+.main-content {
+  width: 100%;
+  max-width: 1200px;
+  margin: 80px auto 0; /* Margen superior para evitar solapamiento con el navbar */
+  display: flex;
+  gap: 20px; /* Espacio entre las secciones */
+  padding: 20px;
+  flex-wrap: wrap; /* Para que sea responsive */
+}
+
+.left-section, .center-section, .right-section {
+  flex: 1; /* Cada sección ocupa el mismo espacio */
+  min-width: 250px; /* Ancho mínimo para evitar que se compriman demasiado */
+  background-color: rgba(255, 255, 255, 0.1); /* Fondo semi-transparente */
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  color: #fff; /* Texto en blanco */
+  display: flex; /* Activar Flexbox */
+  flex-direction: column; /* Alinear contenido en columna */
+  align-items: center; /* Centrar horizontalmente */
+  justify-content: center; /* Centrar verticalmente */
+  text-align: center; /* Alinear texto al centro */
+}
+
+.left-section h2, .center-section h2 {
+  margin-top: 0;
+  font-size: 24px;
+  color: #fff;
+}
+
+.left-section p, .center-section p {
+  font-size: 20px;
+  line-height: 1.5;
+  color: #e0e0e0;
+  font-family: 'Times New Roman', Times, serif;
+  margin: 0; /* Eliminar margen predeterminado del párrafo */
+}
+
+.right-section img {
+  width: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+  height: auto;
+  cursor: pointer;
+}
+
+/* Estilos para el pie de página */
+.footer-section {
+  width: 100%;
+  background-color: var(--c2); /* Fondo oscuro semi-transparente */
+  color: #fff;
+  text-align: center;
+  padding: 15px 0;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.footer-section p {
+  margin: 0;
+  font-size: 14px;
+  color: #e0e0e0;
 }

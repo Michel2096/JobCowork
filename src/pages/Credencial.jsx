@@ -4,6 +4,7 @@ import cowork from '../assets/cowork.jpeg';
 import Usuario from '../assets/usuario.jpg';
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import Security from '../assets/Security.png';
 
 
 
@@ -38,18 +39,48 @@ const Credencial = () => {
 
     return (
         <div className="credencial">
-            <div className="credencial-card">
-            <h2>Credencial de Usuario</h2>
-            <img className="img" src={Usuario} alt="" />  <br />
-            <p><strong>Nombre:</strong> {usuario.nombre}{usuario.app}{usuario.apm}</p>
+  <nav className="navbar">
+    <div className="navbar-content">
+      <div className="navbar-left"> {/* Cambiado de left-section a navbar-left */}
+        <img className="user-img" src={Usuario} alt="Usuario" />
+        {usuario.nombre ? (
+          <h2>{usuario.nombre} {usuario.app} {usuario.apm}</h2>
+        ) : null}
+      </div>
+      <div className="roles-buttons">
+      <button className="role-button" onClick={() => navigate("/userlist")}>Usuarios</button>
+      <button className="role-button" onClick={() => navigate("/ubiform")}>Ubicaciones</button>
+      <button className="role-button" onClick={() => navigate("/horarioform")}>Horarios</button>
+      </div>
+      <button className="logout-button" onClick={() => navigate("/login")}>Salir</button>
+    </div>
+  </nav>
 
-            <p><strong>Correo:</strong> {usuario.correo}</p>
-            <p><strong>Rol:</strong> {usuario.rol}</p><br />
-            <br />
-            <br />
-            <button className='login-button-s' onClick={() => navigate("/login")}>salir</button>
-            </div>
-        </div>
+  {/* Sección dividida en 4 partes */}
+  <div className="main-content">
+    {/* Primera sección (izquierda) */}
+    <div className="left-section">
+      <h2>¡Bienvenido!</h2>
+      <p>Aquí encontrarás herramientas útiles para tu seguridad.</p>
+    </div>
+
+    {/* Segunda sección (centro) */}
+    <div className="center-section">
+      <h2>AVISO</h2>
+      <p>La seguridad es una prioridad. Asegúrate de seguir las mejores prácticas para protegerte</p>
+    </div>
+
+    {/* Tercera sección (derecha) */}
+    <div className="right-section">
+      <img src={Security} alt="Imagen de seguridad" />
+    </div>
+  </div>
+
+  {/* Cuarta sección (abajo) */}
+  <div className="footer-section">
+    <p>Aviso de privacidad: Este sitio cumple con las normativas de protección de datos.</p>
+  </div>
+</div>
 
     );
 
