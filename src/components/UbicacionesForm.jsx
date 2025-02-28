@@ -22,19 +22,37 @@ const UbicacionesForm = () => {
     };
 
     return (
-        <div>
-            <h1>Registrar Ubicación</h1>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <input type="text" id="nombre" name="nombre" placeholder="nombre" onChange={handleChange} />
-                </div>
-                <div>
-                    <input type="text" id="tipo" name="tipo" placeholder="tipo" onChange={handleChange} />
-                </div>
-                <button type="submit">Registrar</button>
-            </form>
-            <button onClick={() => navigate("/credencial")}>Regresar</button>
-        </div>
+        <div className="fond-ubicaciones">
+   <h1 className="titulo-ubicaciones">Registrar Ubicación</h1>
+  <form onSubmit={handleSubmit} className="formulario-ubicaciones">
+    <div className="input-container">
+      <input
+        type="text"
+        id="nombre"
+        name="nombre"
+        placeholder="Nombre"
+        onChange={handleChange}
+        className="input-ubicaciones"
+      />
+    </div>
+    <div className="input-container">
+      <input
+        type="text"
+        id="tipo"
+        name="tipo"
+        placeholder="Tipo"
+        onChange={handleChange}
+        className="input-ubicaciones"
+      />
+    </div>
+    <button type="submit" className="boton-ubicaciones">
+      Registrar
+    </button>
+  </form>
+  <button onClick={() => navigate("/credencial")} className="boton-regresar">
+    Regresar
+  </button>
+</div>
     );
 }; 
 

@@ -27,19 +27,39 @@ const UbicacionesEdit = () => {
     }
 
     return (
-        <div>
-            <h1>Editar Ubicación</h1>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <input type="text" id="nombre" name="nombre" placeholder="nombre" value={ubicacion.nombre} onChange={handleChange} />
-                </div>
-                <div>
-                    <input type="text" id="tipo" name="tipo" placeholder="tipo" value={ubicacion.tipo} onChange={handleChange} />
-                </div>
-                <button type="submit">Actualizar</button>
-            </form>
-            <Link to="/ubiform">Regresar</Link>
-        </div>
+        <div class="fondo-principal">
+  <h1 class="titulo-principal">Editar Ubicación</h1>
+  <form class="formulario-edicion" onSubmit={handleSubmit}>
+    <div class="campo-entrada">
+      <input
+        type="text"
+        id="nombre"
+        name="nombre"
+        placeholder="nombre"
+        value={ubicacion.nombre}
+        onChange={handleChange}
+        class="input-texto"
+      />
+    </div>
+    <div class="campo-entrada">
+      <input
+        type="text"
+        id="tipo"
+        name="tipo"
+        placeholder="tipo"
+        value={ubicacion.tipo}
+        onChange={handleChange}
+        class="input-texto"
+      />
+    </div>
+    <button type="submit" class="boton-actualizar">Actualizar</button>
+  </form>
+  <Link to="/ubiform" class="enlace-regresar">Regresar</Link>
+
+  <div className="footer-section">
+     <p>Aviso de privacidad: Este sitio cumple con las normativas de protección de datos.</p>
+  </div>
+</div>
     );
 }
 

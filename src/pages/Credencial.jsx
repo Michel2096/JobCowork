@@ -76,7 +76,7 @@ const Credencial = () => {
     </div>
   </div>
 
-  {/* Cuarta sección (abajo) */}
+  
   <div className="footer-section">
     <p>Aviso de privacidad: Este sitio cumple con las normativas de protección de datos.</p>
   </div>

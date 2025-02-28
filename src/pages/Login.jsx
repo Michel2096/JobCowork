@@ -68,7 +68,7 @@ const Login = () => {
 
     return (
         <div className='container'>
-            <h1>Login</h1>
+            
             <form onSubmit={handleSubmit}>
                 <img id="logo" src={cowork} alt="Logo" />  
                 <input type="email" name="correo" placeholder='Correo' onChange={handleChange} required disabled={bloqueado} /> 

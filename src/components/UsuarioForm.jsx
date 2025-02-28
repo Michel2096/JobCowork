@@ -93,7 +93,7 @@ const UsuarioForm = () => {
 
     return (
         <form onSubmit={handleSubmit}>
-            <h1>Registro</h1>
+            
 
             <input type="text" name="nombre" placeholder="Nombre" onChange={handleChange} required />
             {errores.nombre && <p style={{ color: "red" }}>{errores.nombre}</p>}

@@ -23,30 +23,34 @@ const handleDelete = async (id) => {
     }
 
     return (
-        <div>
-            <h1>Ubicaciones</h1>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Tipo</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {ubicaciones.map(ubicacion => (
-                        <tr key={ubicacion.id_ubicacion}>
-                            <td>{ubicacion.nombre}</td>
-                            <td>{ubicacion.tipo}</td>
-                            <td>
-                                <Link to={`/ubiedit/${ubicacion.id_ubicacion}`}>Editar</Link>
-                                <button onClick={() => handleDelete(ubicacion.id_ubicacion)}>Eliminar</button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
+        <div className="fond-ubicaciones">
+        <h1 className="titulo-ubicaciones">Ubicaciones</h1>
+        <table className="tabla-ubicaciones">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Tipo</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {ubicaciones.map((ubicacion) => (
+        <tr key={ubicacion.id_ubicacion} className="fila-ubicaciones">
+          <td>{ubicacion.nombre}</td>
+          <td>{ubicacion.tipo}</td>
+          <td className="acciones-ubicaciones">
+            <Link to={`/ubiedit/${ubicacion.id_ubicacion}`} className="enlace-ubicaciones">Editar</Link>
+            <button onClick={() => handleDelete(ubicacion.id_ubicacion)} className="boton-ubicaciones">Eliminar</button>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+
+        <div className="footer-section">
+         <p>Aviso de privacidad: Este sitio cumple con las normativas de protección de datos.</p>
+  </div>
+      </div>
     );
 }   
 

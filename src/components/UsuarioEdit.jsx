@@ -34,43 +34,118 @@ const UsuarioEdit = () => {
     }
 
     return (
-        <div>
-            <h1>Editar Usuario</h1>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <input type="text" id="nombre" name="nombre" placeholder="nombre" value={usuario.nombre} onChange={handleChange} />
-                </div>
-                <div>
-                    <input type="text" id="app" name="app" placeholder="apellido paterno" value={usuario.app} onChange={handleChange} />
-                </div>
-                <div>
-                    <input type="text" id="apm" name="apm" placeholder="apellido materno" value={usuario.apm} onChange={handleChange} />
-                </div>
-                <div>
-                    <input type="email" id="correo" name="correo" placeholder="correo" value={usuario.correo} onChange={handleChange} />
-                </div>
-                <div>
-                    <input type="text" id="sexo" name="sexo" placeholder="sexo" value={usuario.sexo} onChange={handleChange} />
-                </div>
-                <div>
-                    <input type="text" id="rol" name="rol" placeholder="rol" value={usuario.rol} onChange={handleChange} />
-                </div>
-                <div>
-                    <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" placeholder="fecha de nacimiento" value={usuario.fecha_nacimiento} onChange={handleChange} />
-                </div>
-                <div>
-                    <input type="text" id="huella" name="huella" placeholder="huella" value={usuario.huella} onChange={handleChange} />
-                </div>
-                <div>
-                    <input type="password" id="pass" name="pass" placeholder="contraseña" value={usuario.pass} onChange={handleChange} />
-                </div>
-                <button type="submit">Actualizar</button>
-            </form>
-
-            <Link to="/userlist">
-            <button>Regresar</button>
-            </Link>
-        </div>
+        <div class="fondo-principal">
+  <h1 class="titulo-principal">Editar Usuario</h1>
+  <form class="formulario-edicion" onSubmit={handleSubmit}>
+    <div class="campo-entrada">
+      <input
+        type="text"
+        id="nombre"
+        name="nombre"
+        placeholder="nombre"
+        value={usuario.nombre}
+        onChange={handleChange}
+        class="input-texto"
+      />
+    </div>
+    <div class="campo-entrada">
+      <input
+        type="text"
+        id="app"
+        name="app"
+        placeholder="apellido paterno"
+        value={usuario.app}
+        onChange={handleChange}
+        class="input-texto"
+      />
+    </div>
+    <div class="campo-entrada">
+      <input
+        type="text"
+        id="apm"
+        name="apm"
+        placeholder="apellido materno"
+        value={usuario.apm}
+        onChange={handleChange}
+        class="input-texto"
+      />
+    </div>
+    <div class="campo-entrada">
+      <input
+        type="email"
+        id="correo"
+        name="correo"
+        placeholder="correo"
+        value={usuario.correo}
+        onChange={handleChange}
+        class="input-texto"
+      />
+    </div>
+    <div class="campo-entrada">
+      <input
+        type="text"
+        id="sexo"
+        name="sexo"
+        placeholder="sexo"
+        value={usuario.sexo}
+        onChange={handleChange}
+        class="input-texto"
+      />
+    </div>
+    <div class="campo-entrada">
+      <input
+        type="text"
+        id="rol"
+        name="rol"
+        placeholder="rol"
+        value={usuario.rol}
+        onChange={handleChange}
+        class="input-texto"
+      />
+    </div>
+    <div class="campo-entrada">
+      <input
+        type="date"
+        id="fecha_nacimiento"
+        name="fecha_nacimiento"
+        placeholder="fecha de nacimiento"
+        value={usuario.fecha_nacimiento}
+        onChange={handleChange}
+        class="input-texto"
+      />
+    </div>
+    <div class="campo-entrada">
+      <input
+        type="text"
+        id="huella"
+        name="huella"
+        placeholder="huella"
+        value={usuario.huella}
+        onChange={handleChange}
+        class="input-texto"
+      />
+    </div>
+    <div class="campo-entrada">
+      <input
+        type="password"
+        id="pass"
+        name="pass"
+        placeholder="contraseña"
+        value={usuario.pass}
+        onChange={handleChange}
+        class="input-texto"
+      />
+    </div>
+    <button type="submit" class="boton-actualizar">Actualizar</button>
+    <Link to="/userlist" class="enlace-regresar">
+    <button class="boton-actualizar">Regresar</button>
+  </Link>
+  </form>
+  <div className="footer-section">
+     <p>Aviso de privacidad: Este sitio cumple con las normativas de protección de datos.</p>
+  </div>
+  
+</div>
     );
 }
 

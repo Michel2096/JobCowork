@@ -837,3 +837,484 @@ p {
   font-size: 14px;
   color: #e0e0e0;
 }
+
+
+/*Aqui comnieza la vista de lista de usuarios*/
+
+.fond-usuario {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column; /* Para alinear el contenido verticalmente */
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(
+        100% 100% at 100% 0,
+        var(--c1) 4%,
+        var(--_g),
+        #0008 96%,
+        #0000
+      ),
+      radial-gradient(
+          100% 100% at 0 100%,
+          #0000,
+          #0008 4%,
+          var(--_g),
+          var(--c1) 96%
+        )
+        var(--c1);
+  background-size: var(--s) var(--s);
+  --s: 100px; 
+  --c1: #000000; 
+  --c2: #1e1e1e; 
+  --_g: var(--c2) 6% 14%, var(--c1) 16% 24%, var(--c2) 26% 34%,
+    var(--c1) 36% 44%, var(--c2) 46% 54%, var(--c1) 56% 64%, var(--c2) 66% 74%,
+    var(--c1) 76% 84%, var(--c2) 86% 94%;
+  color: white; /* Color de texto para que sea legible sobre el fondo oscuro */
+}
+
+.titulo-usuario {
+  margin-bottom: 20px; 
+  color: #fff;
+}
+
+.tabla-usuario {
+  width: 90%; 
+  max-width: 1200px;
+  border-collapse: collapse;
+  background-color: rgba(255, 255, 255, 0.1); 
+  border-radius: 10px; 
+  overflow: hidden; 
+}
+
+.tabla-usuario th,
+.tabla-usuario td {
+  padding: 12px 15px; /* Espaciado interno */
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Borde inferior */
+}
+
+.tabla-usuario th {
+  background-color: rgba(243, 239, 239, 0.432); /* Fondo oscuro para los encabezados */
+  font-weight: bold;
+
+}
+
+.fila-usuario:hover {
+  background-color: rgba(255, 255, 255, 0.05); /* Efecto hover en las filas */
+}
+
+.acciones-usuario {
+  display: flex;
+  gap: 10px; /* Espacio entre los botones */
+}
+
+.boton-usuario {
+  background-color: #f84444; /* Color de fondo del botón */
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.boton-usuario:hover {
+  background-color: #f66060df; /* Color de fondo al hacer hover */
+}
+
+.enlace-usuario {
+  color: #fff;
+  text-decoration: none;
+}
+
+.enlace-usuario:hover {
+  text-decoration: underline;
+}
+
+.boton-regresar{
+  background-color: #ffffffcd; 
+  color: #000000;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 15px;
+  width: 150px;
+  height: 38px;
+}
+
+.boton-regresar:hover {
+  background-color: #afadad;
+}
+
+/*Aqui comienza el crud de las ubicaciones*/
+
+/* Estilos generales para ambos componentes */
+.fond-ubicaciones {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column; /* Para alinear el contenido verticalmente */
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(
+        100% 100% at 100% 0,
+        var(--c1) 4%,
+        var(--_g),
+        #0008 96%,
+        #0000
+      ),
+      radial-gradient(
+          100% 100% at 0 100%,
+          #0000,
+          #0008 4%,
+          var(--_g),
+          var(--c1) 96%
+        )
+        var(--c1);
+  background-size: var(--s) var(--s);
+  --s: 100px; 
+  --c1: #000000; 
+  --c2: #1e1e1e; 
+  --_g: var(--c2) 6% 14%, var(--c1) 16% 24%, var(--c2) 26% 34%,
+    var(--c1) 36% 44%, var(--c2) 46% 54%, var(--c1) 56% 64%, var(--c2) 66% 74%,
+    var(--c1) 76% 84%, var(--c2) 86% 94%;
+  color: white; /* Color de texto para que sea legible sobre el fondo oscuro */
+}
+
+.titulo-ubicaciones {
+  margin-bottom: 20px; /* Espacio debajo del título */
+  color: #fff; /* Color del texto */
+}
+
+.formulario-ubicaciones{
+  background-color: rgba(255, 255, 255, 0.121); /* Fondo semi-transparente */
+  border-radius: 10px; /* Bordes redondeados */
+  padding: 20px; /* Espaciado interno */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.259); /* Sombra suave */
+  margin-bottom: 40px; 
+
+}
+
+.input-ubicaciones {
+  width: 100%;
+  padding: 12px 15px; /* Espaciado interno */
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Borde semi-transparente */
+  border-radius: 5px; /* Bordes redondeados */
+  background-color: rgba(255, 255, 255, 0.066); /* Fondo semi-transparente */
+  color: white; /* Color del texto */
+  font-size: 16px;
+  outline: none; 
+}
+
+.input-ubicaciones::placeholder {
+  color: rgba(255, 255, 255, 0.5); /* Color del placeholder */
+}
+
+.input-ubicaciones:focus {
+  border-color: rgba(255, 255, 255, 0.5); /* Cambia el color del borde al hacer focus */
+}
+
+
+.tabla-ubicaciones {
+  width: 90%; /* Ancho de la tabla */
+  max-width: 420px;
+
+  border-collapse: collapse;
+  background-color: rgba(255, 255, 255, 0.1); /* Fondo semi-transparente */
+  border-radius: 10px; /* Bordes redondeados */
+  overflow: hidden; /* Para que los bordes redondeados funcionen */
+}
+
+.tabla-ubicaciones th,
+.tabla-ubicaciones td {
+  padding: 12px 15px; /* Espaciado interno */
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+  text-align: center;
+  align-items: center;
+}
+
+.tabla-ubicaciones th {
+  background-color: rgba(243, 239, 239, 0.432); 
+  font-weight: bold;
+  color: #000; 
+}
+
+.fila-ubicaciones:hover {
+  background-color: rgba(255, 255, 255, 0.05); /* Efecto hover en las filas */
+}
+
+.acciones-ubicaciones {
+  display: flex;
+  gap: 20px;
+}
+
+.boton-ubicaciones {
+  background-color: #a7a7a7;
+  color: rgb(0, 0, 0);
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.boton-ubicaciones:hover {
+  background-color: #fdfdfddf; /* Color de fondo al hacer hover */
+}
+
+.enlace-ubicaciones {
+  color: #fff; /* Color del texto del enlace */
+  text-decoration: none;
+  margin-left: 40px;
+  padding-left: 15px;
+}
+
+.enlace-ubicaciones:hover {
+  text-decoration: underline; /* Subrayado al hacer hover */
+}
+
+/* Estilos generales para el fondo y el título */
+.fond-horario {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 20px;
+  background: radial-gradient(
+        100% 100% at 100% 0,
+        var(--c1) 4%,
+        var(--_g),
+        #0008 96%,
+        #0000
+      ),
+      radial-gradient(
+          100% 100% at 0 100%,
+          #0000,
+          #0008 4%,
+          var(--_g),
+          var(--c1) 96%
+        )
+        var(--c1);
+  background-size: var(--s) var(--s);
+  --s: 100px; 
+  --c1: #000000; 
+  --c2: #1e1e1e; 
+  --_g: var(--c2) 6% 14%, var(--c1) 16% 24%, var(--c2) 26% 34%,
+    var(--c1) 36% 44%, var(--c2) 46% 54%, var(--c1) 56% 64%, var(--c2) 66% 74%,
+    var(--c1) 76% 84%, var(--c2) 86% 94%;
+  color: white;
+}
+
+.titulo-horario {
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.tabla-horario {
+  width: 90%;
+  max-width: 1200px;
+  border-collapse: collapse;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 40px;
+}
+
+.tabla-horario th,
+.tabla-horario td {
+  padding: 12px 15px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tabla-horario th {
+  background-color: rgba(243, 239, 239, 0.432);
+  font-weight: bold;
+  color: #000;
+}
+
+.fila-horario:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.acciones-horario {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.formulario-horario {
+  width: 90%;
+  max-width: 1200px;
+  background-color: rgba(255, 255, 255, 0.121);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.259);
+  margin-bottom: 40px;
+}
+
+.input-container {
+  margin-bottom: 15px;
+}
+
+.input-horario {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.066);
+  color: white;
+  font-size: 16px;
+  outline: none;
+}
+
+.input-horario::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.input-horario:focus {
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.boton-horario {
+  background-color: #a7a7a7;
+  color: rgb(0, 0, 0);
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.boton-horario:hover {
+  background-color: #fdfdfddf;
+}
+
+.boton-regresar {
+  background-color: #ffffffcd;
+  color: #000000;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 15px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.boton-regresar:hover {
+  background-color: #afadad;
+}
+
+.enlace-horario {
+  color: #fff;
+  text-decoration: none;
+}
+
+.enlace-horario:hover {
+  text-decoration: underline;
+}
+
+/*Usuario Edit*/
+.fondo-principal {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 20px;
+  background: radial-gradient(
+        100% 100% at 100% 0,
+        var(--c1) 4%,
+        var(--_g),
+        #0008 96%,
+        #0000
+      ),
+      radial-gradient(
+          100% 100% at 0 100%,
+          #0000,
+          #0008 4%,
+          var(--_g),
+          var(--c1) 96%
+        )
+        var(--c1);
+  background-size: var(--s) var(--s);
+  --s: 100px; 
+  --c1: #000000; 
+  --c2: #1e1e1e; 
+  --_g: var(--c2) 6% 14%, var(--c1) 16% 24%, var(--c2) 26% 34%,
+    var(--c1) 36% 44%, var(--c2) 46% 54%, var(--c1) 56% 64%, var(--c2) 66% 74%,
+    var(--c1) 76% 84%, var(--c2) 86% 94%;
+  color: white;
+}
+
+/* Estilos para el título principal */
+.titulo-principal {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* Estilos para el formulario */
+.formulario-edicion {
+  width: 100%;
+  max-width: 400px; /* Ancho máximo del formulario */
+  display: flex;
+  flex-direction: column;
+  gap: 6px; 
+  background-color: #ffffff15;
+  box-shadow: none;
+}
+
+.campo-entrada {
+  width: 100%;
+}
+
+.input-texto {
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 1.1rem;
+  outline: none;
+
+}
+
+
+
+/* Estilos para el botón de actualización */
+.boton-actualizar {
+  background-color: #a7a7a7;
+  color: rgb(0, 0, 0);
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  width: 100%;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+}
+.boton-actualizar:hover {
+  background-color: #fdfdfd;
+}
+
+
+/* Estilos para el enlace de regreso */
+.enlace-regresar {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: text-decoration 0.3s ease;
+}
+.enlace-regresar:hover {
+  text-decoration: underline;
+}
