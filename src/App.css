@@ -843,7 +843,7 @@ p {
 
 .fond-usuario {
   width: 100%;
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column; /* Para alinear el contenido verticalmente */
   justify-content: center;
@@ -871,6 +871,7 @@ p {
     var(--c1) 36% 44%, var(--c2) 46% 54%, var(--c1) 56% 64%, var(--c2) 66% 74%,
     var(--c1) 76% 84%, var(--c2) 86% 94%;
   color: white; /* Color de texto para que sea legible sobre el fondo oscuro */
+  
 }
 
 .titulo-usuario {
@@ -918,13 +919,15 @@ p {
   cursor: pointer;
 }
 
-.boton-usuario:hover {
-  background-color: #f66060df; /* Color de fondo al hacer hover */
-}
+
 
 .enlace-usuario {
-  color: #fff;
-  text-decoration: none;
+  background-color: #f7bb09; /* Color de fondo del botón */
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .enlace-usuario:hover {

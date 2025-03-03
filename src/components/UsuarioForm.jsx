@@ -92,7 +92,7 @@ const UsuarioForm = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="formulario-ubicaciones">
             
 
             <input type="text" name="nombre" placeholder="Nombre" onChange={handleChange} required />
