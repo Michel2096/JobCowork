@@ -64,7 +64,7 @@ const UsuarioList = () => {
             alert("Por favor, selecciona un archivo primero.");
             return;
         }
-
+    
         const reader = new FileReader();
         reader.onload = (e) => {
             const data = new Uint8Array(e.target.result);
@@ -72,17 +72,20 @@ const UsuarioList = () => {
             const sheetName = workbook.SheetNames[0];
             const sheet = workbook.Sheets[sheetName];
             const importedData = XLSX.utils.sheet_to_json(sheet);
-
-            axios.post("http://localhost:3001/api/usuarios/importar", importedData)
+    
+            console.log("Datos importados:", importedData); // 🔹 Verifica en la consola los datos antes de enviarlos
+    
+            axios.post("http://localhost:3001/api/usuarios/importar", { usuarios: importedData })
                 .then(() => {
                     setUsuarios([...usuarios, ...importedData]);
                     alert("Usuarios importados correctamente");
                 })
-                .catch(error => console.error(error));
+                .catch(error => console.error("Error en la importación:", error));
         };
         reader.readAsArrayBuffer(selectedFile);
     };
-
+        
+        
     // Maneja el cambio de archivo seleccionado
     const handleFileChange = (event) => {
         setSelectedFile(event.target.files[0]);
@@ -167,6 +170,23 @@ const UsuarioList = () => {
                     )}
                 </tbody>
             </table>
+
+
+            <div className="paginacion" style={{ display: 'flex', justifyContent: 'flex-end', padding: '10px' }}>
+                {currentPage > 1 && (
+                    <button onClick={prevPage} className="boton-paginacion">⬅️</button>
+                )}
+                {indexOfLastUsuario < filteredUsuarios.length && (
+                    <button onClick={nextPage} className="boton-paginacion">➡️</button>
+                )}
+            </div>
+
+            <br /><br /><br />
+            <div className="footer-section">
+                <p>Aviso de privacidad: Este sitio cumple con las normativas de protección de datos.</p>
+            </div>
+
+
         </div>
     );
 };
