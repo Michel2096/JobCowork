@@ -6,7 +6,6 @@ import * as XLSX from "xlsx";
 import { Bar } from "react-chartjs-2";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 
-// Registrar los elementos necesarios de Chart.js
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const HorarioList = () => {
@@ -68,7 +67,6 @@ const HorarioList = () => {
         }
     };
 
-    // Función para preparar datos para la gráfica
     const prepareBarChartData = () => {
         const countByUbicacion = horarios.reduce((acc, horario) => {
             const nombreUbicacion = getUbicacionNombre(horario.id_ubicacion);
@@ -91,33 +89,33 @@ const HorarioList = () => {
     };
 
     return (
-        <div className="fond-usuario">
-            <nav className="navbar">
-                <div className="navbar-content">
-                    <div className="roles-buttons">
-                        <button onClick={() => navigate("/credencial")} className="role-button">Regresar</button>
-                        <button className="role-button" onClick={() => navigate("/userlist")}>Usuarios</button>
-                        <button className="role-button" onClick={() => navigate("/ubiform")}>Ubicaciones</button>
+        <div className="container mt-4">
+            <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                <div className="container-fluid">
+                    <div className="navbar-nav">
+                        <button onClick={() => navigate("/credencial")} className="btn btn-primary me-2">Regresar</button>
+                        <button className="btn btn-secondary me-2" onClick={() => navigate("/userlist")}>Usuarios</button>
+                        <button className="btn btn-secondary" onClick={() => navigate("/ubiform")}>Ubicaciones</button>
                     </div>
                 </div>
             </nav>
             <br />
 
-            <h1 className="titulo-ubicaciones">Horarios</h1>
-            {error && <p className="error-message">{error}</p>}
+            <h1 className="text-center">Horarios</h1>
+            {error && <div className="alert alert-danger">{error}</div>}
 
-            <div>
-                <label>🔎 Buscar en Horarios:</label>
+            <div className="mb-3">
+                <label className="form-label">🔎 Buscar en Horarios:</label>
                 <input
                     type="text"
                     placeholder="Buscar horario..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="tabla-ubicaciones"
+                    className="form-control"
                 />
             </div>
 
-            <table className="tabla-ubicaciones">
+            <table className="table table-striped">
                 <thead>
                     <tr>
                         <th>Ubicación</th>
@@ -129,40 +127,36 @@ const HorarioList = () => {
                 <tbody>
                     {currentHorarios.length > 0 ? (
                         currentHorarios.map((horario) => (
-                            <tr key={horario.id_horarios} className="fila-horario">
+                            <tr key={horario.id_horarios}>
                                 <td>{getUbicacionNombre(horario.id_ubicacion)}</td>
                                 <td>{horario.hora_entrada}</td>
                                 <td>{horario.hora_salida}</td>
-                                <td className="acciones-horario">
-                                    <Link to={`/horarioedit/${horario.id_horarios}`} className="enlace-usuario">Editar</Link>
-                                    <button onClick={() => handleDelete(horario.id_horarios)} className="boton-usuario">Eliminar</button>
+                                <td>
+                                    <Link to={`/horarioedit/${horario.id_horarios}`} className="btn btn-warning btn-sm me-2">Editar</Link>
+                                    <button onClick={() => handleDelete(horario.id_horarios)} className="btn btn-danger btn-sm">Eliminar</button>
                                 </td>
                             </tr>
                         ))
                     ) : (
                         <tr>
-                            <td colSpan="4" style={{ textAlign: "center" }}>No se encontraron resultados</td>
+                            <td colSpan="4" className="text-center">No se encontraron resultados</td>
                         </tr>
                     )}
                 </tbody>
             </table>
 
-            <div className="paginacion" style={{ display: 'flex', justifyContent: 'flex-end', padding: '10px' }}>
+            <div className="d-flex justify-content-end">
                 {currentPage > 1 && (
-                    <button onClick={prevPage} className="boton-paginacion">⬅</button>
+                    <button onClick={prevPage} className="btn btn-primary me-2">⬅</button>
                 )}
                 {indexOfLastHorario < filteredHorarios.length && (
-                    <button onClick={nextPage} className="boton-paginacion">➡</button>
+                    <button onClick={nextPage} className="btn btn-primary">➡</button>
                 )}
             </div><br /><br />
 
-            {/* Gráfico de horarios por ubicación */}
-            <div style={{ width: '80%', margin: 'auto', paddingTop: '20px' }}>
-                
+            <div className="chart-container" style={{ width: '80%', margin: 'auto', paddingTop: '20px' }}>
                 <Bar data={prepareBarChartData()} options={{ responsive: true }} />
             </div>
-
-            
         </div>
     );
 }

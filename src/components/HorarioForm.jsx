@@ -17,7 +17,7 @@ const HorarioForm = () => {
         axios.get("http://localhost:3001/api/usuarios")
             .then(response => setUsuarios(response.data))
             .catch(error => console.error("Error al obtener usuarios:", error));
-        
+
         axios.get("http://localhost:3001/api/ubicaciones")
             .then(response => setUbicaciones(response.data))
             .catch(error => console.error("Error al obtener ubicaciones:", error));
@@ -35,11 +35,11 @@ const HorarioForm = () => {
     };
 
     return (
-        <div className="fond-ubicaciones">
-            <h1 className="titulo-ubicaciones">Registrar Horario</h1>
-            <form onSubmit={handleSubmit} className="formulario-ubicaciones">
-                <div className="input-container">
-                    <select name="id_usuario" onChange={handleChange} className="input-ubicaciones">
+        <div className="container mt-4">
+            <h1 className="text-center">Registrar Horario</h1>
+            <form onSubmit={handleSubmit} className="form">
+                <div className="mb-3">
+                    <select name="id_usuario" onChange={handleChange} className="form-select">
                         <option value="">Seleccione un usuario</option>
                         {usuarios.map(usuario => (
                             <option key={usuario.id_usuario} value={usuario.id_usuario}>
@@ -48,8 +48,8 @@ const HorarioForm = () => {
                         ))}
                     </select>
                 </div>
-                <div className="input-container">
-                    <select name="id_ubicacion" onChange={handleChange} className="input-ubicaciones">
+                <div className="mb-3">
+                    <select name="id_ubicacion" onChange={handleChange} className="form-select">
                         <option value="">Seleccione una ubicación</option>
                         {ubicaciones.map(ubicacion => (
                             <option key={ubicacion.id_ubicacion} value={ubicacion.id_ubicacion}>
@@ -58,29 +58,29 @@ const HorarioForm = () => {
                         ))}
                     </select>
                 </div>
-                <div className="input-container">
+                <div className="mb-3">
                     <input
                         type="time"
                         name="hora_entrada"
                         placeholder="Hora de entrada"
                         onChange={handleChange}
-                        className="input-ubicaciones"
+                        className="form-control"
                     />
                 </div>
-                <div className="input-container">
+                <div className="mb-3">
                     <input
                         type="time"
                         name="hora_salida"
                         placeholder="Hora de salida"
                         onChange={handleChange}
-                        className="input-ubicaciones"
+                        className="form-control"
                     />
                 </div>
-                <button type="submit" className="boton-ubicaciones">
+                <button type="submit" className="btn btn-primary">
                     Registrar
                 </button>
             </form>
-            <button onClick={() => navigate("/credencial")} className="boton-regresar">
+            <button onClick={() => navigate("/credencial")} className="btn btn-secondary mt-3">
                 Regresar
             </button>
         </div>

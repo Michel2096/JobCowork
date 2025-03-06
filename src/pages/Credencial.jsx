@@ -5,14 +5,10 @@ import Usuario from '../assets/usuario.jpg';
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Security from '../assets/Security.png';
-
-
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Credencial = () => {
     const navigate = useNavigate();
-
-
     const [usuario, setUsuario] = useState(null);
     const [error, setError] = useState('');
 
@@ -20,12 +16,11 @@ const Credencial = () => {
         const usuarioAutenticado = localStorage.getItem("usuario");
         if (!usuarioAutenticado) {
             setError("No estás autenticado. Redirigiendo...");
-            // Redirigir al login si no hay usuario autenticado
             setTimeout(() => {
                 window.location.href = "/login";
             }, 2000);
         } else {
-            setUsuario(JSON.parse(usuarioAutenticado)); // Obtener datos del usuario desde localStorage
+            setUsuario(JSON.parse(usuarioAutenticado));
         }
     }, []);
 
@@ -38,53 +33,63 @@ const Credencial = () => {
     }
 
     return (
-        <div className="credencial">
-  <nav className="navbar">
-    <div className="navbar-content">
-      <div className="navbar-left"> {/* Cambiado de left-section a navbar-left */}
-        <img className="user-img" src={Usuario} alt="Usuario" />
-        {usuario.nombre ? (
-          <h2>{usuario.nombre} {usuario.app} {usuario.apm}</h2>
-        ) : null}
-      </div>
-      <div className="roles-buttons">
-      <button className="role-button" onClick={() => navigate("/userlist")}>Usuarios</button>
-      <button className="role-button" onClick={() => navigate("/ubiform")}>Ubicaciones</button>
-      <button className="role-button" onClick={() => navigate("/horarioform")}>Horarios</button>
-      </div>
-      <button className="logout-button" onClick={() => navigate("/login")}>Salir</button>
-    </div>
-  </nav>
+        <div className="container-fluid d-flex flex-column vh-100 p-0">
+            {/* Navbar */}
+            <nav className="navbar navbar-expand-lg navbar-dark bg-dark p-3">
+                <div className="container-fluid">
+                    <div className="d-flex align-items-center">
+                        <img src={Usuario} alt="Usuario" className="rounded-circle me-3" style={{ width: '50px', height: '50px' }} />
+                        {usuario.nombre && <h2 className="text-white mb-0">{usuario.nombre} {usuario.app} {usuario.apm}</h2>}
+                    </div>
+                    <div className="d-flex">
+                        <button className="btn btn-primary me-2" onClick={() => navigate("/userlist")}>Usuarios</button>
+                        <button className="btn btn-primary me-2" onClick={() => navigate("/ubiform")}>Ubicaciones</button>
+                        <button className="btn btn-primary me-2" onClick={() => navigate("/horarioform")}>Horarios</button>
+                        <button className="btn btn-danger" onClick={() => navigate("/login")}>Salir</button>
+                    </div>
+                </div>
+            </nav>
 
-  {/* Sección dividida en 4 partes */}
-  <div className="main-content">
-    {/* Primera sección (izquierda) */}
-    <div className="left-section">
-      <h2>¡Bienvenido!</h2>
-      <p>Aquí encontrarás herramientas útiles para tu seguridad.</p>
-    </div>
+            {/* Main Content */}
+            <div className="container-fluid flex-grow-1 d-flex align-items-center justify-content-center">
+                <div className="row w-100">
+                    {/* Left Section */}
+                    <div className="col-md-4">
+                        <div className="card h-100">
+                            <div className="card-body">
+                                <h2 className="card-title">¡Bienvenido!</h2>
+                                <p className="card-text">Aquí encontrarás herramientas útiles para tu seguridad.</p>
+                            </div>
+                        </div>
+                    </div>
 
-    {/* Segunda sección (centro) */}
-    <div className="center-section">
-      <h2>AVISO</h2>
-      <p>La seguridad es una prioridad. Asegúrate de seguir las mejores prácticas para protegerte</p>
-    </div>
+                    {/* Center Section */}
+                    <div className="col-md-4">
+                        <div className="card h-100">
+                            <div className="card-body">
+                                <h2 className="card-title">AVISO</h2>
+                                <p className="card-text">La seguridad es una prioridad. Asegúrate de seguir las mejores prácticas para protegerte.</p>
+                            </div>
+                        </div>
+                    </div>
 
-    {/* Tercera sección (derecha) */}
-    <div className="right-section">
-      <img src={Security} alt="Imagen de seguridad" />
-    </div>
-  </div>
+                    {/* Right Section */}
+                    <div className="col-md-4">
+                        <div className="card h-100">
+                            <div className="card-body text-center">
+                                <img src={Security} alt="Imagen de seguridad" className="img-fluid" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-  
-  <div className="footer-section">
-    <p>Aviso de privacidad: Este sitio cumple con las normativas de protección de datos.</p>
-  </div>
-</div>
-
+            {/* Footer */}
+            <footer className="bg-dark text-white text-center p-3">
+                <p className="mb-0">Aviso de privacidad: Este sitio cumple con las normativas de protección de datos.</p>
+            </footer>
+        </div>
     );
-
-
 };
 
 export default Credencial;

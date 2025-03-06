@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import * as XLSX from "xlsx";
-import { Bar } from "react-chartjs-2"; // Importa el gráfico de barras de Chart.js
+import { Bar } from "react-chartjs-2";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-// Registra los componentes de Chart.js que vas a usar (necesario para que Chart.js funcione)
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const UsuarioList = () => {
@@ -15,7 +15,7 @@ const UsuarioList = () => {
     const [usuarios, setUsuarios] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
-    const [selectedFile, setSelectedFile] = useState(null);  // Estado para el archivo
+    const [selectedFile, setSelectedFile] = useState(null);
     const usuariosPerPage = 5;
 
     useEffect(() => {
@@ -54,7 +54,6 @@ const UsuarioList = () => {
         }
     };
 
-    // 🔹 Exportar usuarios a Excel
     const exportToExcel = () => {
         const dataToExport = filteredUsuarios.length > 0 ? filteredUsuarios : usuarios;
         const worksheet = XLSX.utils.json_to_sheet(dataToExport);
@@ -63,13 +62,12 @@ const UsuarioList = () => {
         XLSX.writeFile(workbook, "usuarios.xlsx");
     };
 
-    // 🔹 Importar usuarios desde Excel
     const importFromExcel = () => {
         if (!selectedFile) {
             alert("Por favor, selecciona un archivo primero.");
             return;
         }
-    
+
         const reader = new FileReader();
         reader.onload = (e) => {
             const data = new Uint8Array(e.target.result);
@@ -77,9 +75,7 @@ const UsuarioList = () => {
             const sheetName = workbook.SheetNames[0];
             const sheet = workbook.Sheets[sheetName];
             const importedData = XLSX.utils.sheet_to_json(sheet);
-    
-            console.log("Datos importados:", importedData); // 🔹 Verifica en la consola los datos antes de enviarlos
-    
+
             axios.post("http://localhost:3001/api/usuarios/importar", { usuarios: importedData })
                 .then(() => {
                     setUsuarios([...usuarios, ...importedData]);
@@ -89,95 +85,91 @@ const UsuarioList = () => {
         };
         reader.readAsArrayBuffer(selectedFile);
     };
-        
-        
-    // Maneja el cambio de archivo seleccionado
+
     const handleFileChange = (event) => {
         setSelectedFile(event.target.files[0]);
     };
 
-
-    // 🔹 Preparar los datos para el gráfico
     const prepareChartData = () => {
-        // Se cuenta cuántos usuarios hay por cada sexo
         const sexoCount = usuarios.reduce((acc, usuario) => {
             acc[usuario.sexo] = (acc[usuario.sexo] || 0) + 1;
             return acc;
         }, {});
         return {
-            labels: Object.keys(sexoCount), // etiquetas
+            labels: Object.keys(sexoCount),
             datasets: [
                 {
-                    label: 'Usuarios por Sexo', // Título de la gráfica
-                    data: Object.values(sexoCount), // Datos de la gráfica (conteo de usuarios por rol)
-                    backgroundColor: 'rgba(234, 243, 243, 0.6)', // Color de fondo de las barras
-                    borderColor: 'rgb(242, 241, 241)', // Color del borde de las barras
-                    borderWidth: 5,
+                    label: 'Usuarios por Sexo',
+                    data: Object.values(sexoCount),
+                    backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1,
                 }
             ],
         };
     };
 
-
     return (
-        <div className="fond-usuario">
-            <nav className="navbar">
-                <div className="navbar-content">
-                    <div className="roles-buttons">
-                        <button onClick={() => navigate("/credencial")} className="role-button">Regresar</button>
-                        <button className="role-button" onClick={() => navigate("/ubiform")}>Ubicaciones</button>
-                        <button className="role-button" onClick={() => navigate("/horarioform")}>Horarios</button>
+        <div className="container-fluid vh-100 d-flex flex-column bg-light p-0">
+            {/* Navbar */}
+            <nav className="navbar navbar-expand-lg navbar-dark bg-dark p-3">
+                <div className="container-fluid">
+                    <h2 className="text-white mb-0">Lista de Usuarios</h2>
+                    <div>
+                        <button onClick={() => navigate("/credencial")} className="btn btn-primary me-2">Regresar</button>
+                        <button onClick={() => navigate("/ubiform")} className="btn btn-primary me-2">Ubicaciones</button>
+                        <button onClick={() => navigate("/horarioform")} className="btn btn-primary">Horarios</button>
                     </div>
                 </div>
             </nav>
-            <br /><br />
 
-            <h1 className="titulo-horario">REGISTRAR USUARIO</h1>
-            <UsuarioForm />
+            {/* Contenido Principal */}
+            <div className="container flex-grow-1 p-4">
+                <h1 className="text-center mb-4">REGISTRAR USUARIO</h1>
+                <UsuarioForm />
 
+                <div className="mb-4">
+                    <input
+                        type="text"
+                        placeholder="Buscar usuario..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="form-control"
+                    />
+                </div>
 
-            <div className="tabla-ubicaciones">
-                <label>🔎 Buscar en Usuarios:</label>
-                <input
-                    type="text"
-                    placeholder="Buscar usuario..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="tabla-usuario"
-                />
-            </div>
+                <div className="mb-4 d-flex gap-2">
+                    <button onClick={exportToExcel} className="btn btn-success">
+                        <i className="bi bi-file-earmark-excel"></i> Exportar a Excel
+                    </button>
+                    <input
+                        type="file"
+                        accept=".xlsx"
+                        onChange={handleFileChange}
+                        className="form-control w-auto"
+                    />
+                    <button onClick={importFromExcel} className="btn btn-warning">
+                        <i className="bi bi-file-earmark-arrow-up"></i> Importar desde Excel
+                    </button>
+                </div>
 
-            {/* Botones de exportación e importación */}
-            <div className="tabla-ubicaciones">
-                <button onClick={exportToExcel} className="role-button">📤 Exportar a Excel</button>
-                <input
-                    type="file"
-                    accept=".xlsx"
-                    onChange={handleFileChange}
-                    className="import-input"
-                />
-                <button onClick={importFromExcel} className="role-button">📥 Importar desde Excel</button>
-            </div>
-
-            <table className="tabla-ubicaciones">
-                <thead>
-                    <h1 className="titulo-horario">Usuarios</h1>
-                    <tr>
-                        <th>Id</th>
-                        <th>Nombre</th>
-                        <th>Apellido Paterno</th>
-                        <th>Apellido Materno</th>
-                        <th>Correo</th>
-                        <th>Sexo</th>
-                        <th>Rol</th>
-                        <th>Fecha de Nacimiento</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {currentUsuarios.length > 0 ? (
-                        currentUsuarios.map((usuario) => (
-                            <tr key={usuario.id_usuario} className="fila-usuario">
+                <table className="table table-striped table-bordered table-hover">
+                    <thead className="table-dark">
+                        <tr>
+                            <th>Id</th>
+                            <th>Nombre</th>
+                            <th>Apellido Paterno</th>
+                            <th>Apellido Materno</th>
+                            <th>Correo</th>
+                            <th>Sexo</th>
+                            <th>Rol</th>
+                            <th>Fecha de Nacimiento</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {currentUsuarios.map((usuario) => (
+                            <tr key={usuario.id_usuario}>
                                 <td>{usuario.id_usuario}</td>
                                 <td>{usuario.nombre}</td>
                                 <td>{usuario.app}</td>
@@ -186,42 +178,37 @@ const UsuarioList = () => {
                                 <td>{usuario.sexo}</td>
                                 <td>{usuario.rol}</td>
                                 <td>{usuario.fecha_nacimiento}</td>
-                                <td className="acciones-usuario">
-                                    <Link to={`/useredit/${usuario.id_usuario}`} className="enlace-usuario">Editar</Link>
-                                    <button onClick={() => handleDelete(usuario.id_usuario)} className="boton-usuario">Eliminar</button>
+                                <td>
+                                    <Link to={`/useredit/${usuario.id_usuario}`} className="btn btn-primary btn-sm me-2">
+                                        <i className="bi bi-pencil"></i> Editar
+                                    </Link>
+                                    <button onClick={() => handleDelete(usuario.id_usuario)} className="btn btn-danger btn-sm">
+                                        <i className="bi bi-trash"></i> Eliminar
+                                    </button>
                                 </td>
                             </tr>
-                        ))
-                    ) : (
-                        <tr>
-                            <td colSpan="9" style={{ textAlign: "center" }}>No se encontraron resultados</td>
-                        </tr>
-                    )}
-                </tbody>
-            </table>
+                        ))}
+                    </tbody>
+                </table>
 
+                <div className="d-flex justify-content-between mb-4">
+                    <button onClick={prevPage} disabled={currentPage === 1} className="btn btn-secondary">
+                        <i className="bi bi-arrow-left"></i> Anterior
+                    </button>
+                    <button onClick={nextPage} disabled={indexOfLastUsuario >= filteredUsuarios.length} className="btn btn-secondary">
+                        Siguiente <i className="bi bi-arrow-right"></i>
+                    </button>
+                </div>
 
-            <div className="paginacion" style={{ display: 'flex', justifyContent: 'flex-end', padding: '10px' }}>
-                {currentPage > 1 && (
-                    <button onClick={prevPage} className="boton-paginacion">⬅️</button>
-                )}
-                {indexOfLastUsuario < filteredUsuarios.length && (
-                    <button onClick={nextPage} className="boton-paginacion">➡️</button>
-                )}
+                <div className="mb-4">
+                    <Bar data={prepareChartData()} options={{ responsive: true }} />
+                </div>
             </div>
 
-            
-            {/* 🔹 Gráfico de Usuarios por Rol */}
-            <div style={{ width: '80%', margin: 'auto', paddingTop: '20px' }}>
-                <Bar data={prepareChartData()} options={{ responsive: true }} /> {/* Muestra el gráfico */}
-            </div>
-
-            <br /><br /><br />
-            <div className="footer-section">
-                <p>Aviso de privacidad: Este sitio cumple con las normativas de protección de datos.</p>
-            </div>
-
-
+            {/* Footer */}
+            <footer className="bg-dark text-white text-center p-3">
+                <p className="mb-0">Aviso de privacidad: Este sitio cumple con las normativas de protección de datos.</p>
+            </footer>
         </div>
     );
 };

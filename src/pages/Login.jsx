@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import cowork from '../assets/cowork.jpeg';
 import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -67,25 +68,50 @@ const Login = () => {
     };
 
     return (
-        <div className='container'>
-            
-            <form onSubmit={handleSubmit}>
-                <img id="logo" src={cowork} alt="Logo" />  
-                <input type="email" name="correo" placeholder='Correo' onChange={handleChange} required disabled={bloqueado} /> 
-                <input type="password" name="pass" placeholder='Contraseña' onChange={handleChange} required disabled={bloqueado} />
-
-                {error && <p style={{ color: 'red' }}>{error}</p>}
-                {bloqueado && <p style={{ color: 'red' }}>Demasiados intentos fallidos. Intenta nuevamente en 3 minutos.</p>}
-
-                <button type="submit" className="login-button" disabled={bloqueado}>Iniciar sesión</button>
-
-                <p>¿No tienes cuenta?{' '}
-                    <Link to="/form"><button className="register-button" disabled={bloqueado}>Regístrate</button></Link>
-                    <Link to="/form"><button className="register-button" disabled={bloqueado}>Recuperar contraseña</button></Link>
-                </p>
-
-                <button className='login-button-s' onClick={() => navigate("/")} disabled={bloqueado}>Salir</button>
-            </form>
+        <div className="container-fluid vh-100 d-flex flex-column justify-content-center align-items-center bg-light">
+            <div className="card shadow p-4" style={{ maxWidth: '400px', width: '100%' }}>
+                <img src={cowork} alt="Logo" className="img-fluid mb-4" style={{ maxHeight: '300px' }} />
+                <form onSubmit={handleSubmit}>
+                    <div className="mb-3">
+                        <input
+                            type="email"
+                            name="correo"
+                            placeholder="Correo"
+                            onChange={handleChange}
+                            className="form-control"
+                            required
+                            disabled={bloqueado}
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <input
+                            type="password"
+                            name="pass"
+                            placeholder="Contraseña"
+                            onChange={handleChange}
+                            className="form-control"
+                            required
+                            disabled={bloqueado}
+                        />
+                    </div>
+                    {error && <p className="text-danger text-center">{error}</p>}
+                    {bloqueado && <p className="text-danger text-center">Demasiados intentos fallidos. Intenta nuevamente en 3 minutos.</p>}
+                    <div className="d-grid gap-2">
+                        <button type="submit" className="btn btn-primary" disabled={bloqueado}>
+                            Iniciar sesión
+                        </button>
+                        <Link to="/form" className="btn btn-secondary" disabled={bloqueado}>
+                            Regístrate
+                        </Link>
+                        <Link to="/form" className="btn btn-link" disabled={bloqueado}>
+                            Recuperar contraseña
+                        </Link>
+                        <button className="btn btn-outline-danger" onClick={() => navigate("/")} disabled={bloqueado}>
+                            Salir
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     );
 };

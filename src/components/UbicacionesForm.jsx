@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const UbicacionesForm = () => {
     const navigate = useNavigate();
@@ -22,42 +23,40 @@ const UbicacionesForm = () => {
     };
 
     return (
-        <div className="fond-ubicaciones">
-   <h1 className="titulo-ubicaciones">Registrar Ubicación</h1>
-  <form onSubmit={handleSubmit} className="formulario-ubicaciones">
-    <div className="input-container">
-      <input
-        type="text"
-        id="nombre"
-        name="nombre"
-        placeholder="Nombre"
-        onChange={handleChange}
-        className="input-ubicaciones"
-      />
-    </div>
-    <div className="input-container">
-      <input
-        type="text"
-        id="tipo"
-        name="tipo"
-        placeholder="Tipo"
-        onChange={handleChange}
-        className="input-ubicaciones"
-      />
-    </div>
-    <button type="submit" className="boton-ubicaciones">
-      Registrar
-    </button>
-  </form>
-  <button onClick={() => navigate("/credencial")} className="boton-regresar">
-    Regresar
-  </button>
-  
-</div>
+        <div className="container-fluid vh-100 d-flex flex-column justify-content-center align-items-center bg-light">
+            <div className="card shadow p-4 w-100" style={{ maxWidth: "500px" }}>
+                <h2 className="text-center mb-4">Registrar Ubicación</h2>
+                <form onSubmit={handleSubmit}>
+                    <div className="mb-3">
+                        <input
+                            type="text"
+                            id="nombre"
+                            name="nombre"
+                            placeholder="Nombre"
+                            onChange={handleChange}
+                            className="form-control"
+                            required
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <input
+                            type="text"
+                            id="tipo"
+                            name="tipo"
+                            placeholder="Tipo"
+                            onChange={handleChange}
+                            className="form-control"
+                            required
+                        />
+                    </div>
+                    <div className="d-grid gap-2">
+                        <button type="submit" className="btn btn-primary">Registrar</button>
+                        <button type="button" onClick={() => navigate("/credencial")} className="btn btn-secondary">Regresar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     );
 }; 
 
 export default UbicacionesForm;
-
-
-

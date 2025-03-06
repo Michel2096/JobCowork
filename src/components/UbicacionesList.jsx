@@ -2,12 +2,11 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import * as XLSX from "xlsx";
-import { Line } from "react-chartjs-2"; // Importa el gráfico de líneas de Chart.js
+import { Line } from "react-chartjs-2";
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-// Registra los componentes de Chart.js que vas a usar (necesario para que Chart.js funcione)
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
-
 
 const UbicacionesList = () => {
     const navigate = useNavigate();
@@ -53,7 +52,6 @@ const UbicacionesList = () => {
         }
     };
 
-    // Exportar ubicaciones a Excel
     const exportToExcel = () => {
         const worksheet = XLSX.utils.json_to_sheet(filteredUbicaciones);
         const workbook = XLSX.utils.book_new();
@@ -61,7 +59,6 @@ const UbicacionesList = () => {
         XLSX.writeFile(workbook, "ubicaciones.xlsx");
     };
 
-    // Importar ubicaciones desde Excel
     const importFromExcel = () => {
         if (!selectedFile) {
             alert("Por favor, selecciona un archivo primero.");
@@ -86,106 +83,123 @@ const UbicacionesList = () => {
         reader.readAsArrayBuffer(selectedFile);
     };
 
- // Preparar los datos para el gráfico de líneas
- const prepareLineChartData = () => {
-    // Se cuenta cuántas ubicaciones hay por cada tipo
-    const tipoCount = ubicaciones.reduce((acc, ubicacion) => {
-        acc[ubicacion.tipo] = (acc[ubicacion.tipo] || 0) + 1;
-        return acc;
-    }, {});
+    const prepareLineChartData = () => {
+        const tipoCount = ubicaciones.reduce((acc, ubicacion) => {
+            acc[ubicacion.tipo] = (acc[ubicacion.tipo] || 0) + 1;
+            return acc;
+        }, {});
 
-    return {
-        labels: Object.keys(tipoCount), // Tipos como etiquetas
-        datasets: [
-            {
-                label: 'Ubicaciones por Tipo', // Título de la gráfica
-                data: Object.values(tipoCount), // Datos de la gráfica (conteo de ubicaciones por tipo)
-                fill: false, // No llenar el área bajo la línea
-                borderColor: 'rgba(75, 192, 192, 1)', // Color de la línea
-                tension: 0.1, // Curvatura de la línea
-                borderWidth: 2, // Grosor de la línea
-            }
-        ],
+        return {
+            labels: Object.keys(tipoCount),
+            datasets: [
+                {
+                    label: 'Ubicaciones por Tipo',
+                    data: Object.values(tipoCount),
+                    fill: false,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    tension: 0.1,
+                    borderWidth: 2,
+                }
+            ],
+        };
     };
-};
+
     return (
-        <div className="fond-usuario">
-            <nav className="navbar">
-                <div className="navbar-content">
-                    <div className="roles-buttons">
-                        <button onClick={() => navigate("/credencial")} className="role-button">Regresar</button>
-                        <button className="role-button" onClick={() => navigate("/userlist")}>Usuarios</button>
-                        <button className="role-button" onClick={() => navigate("/horarioform")}>Horarios</button>
+        <div className="container-fluid vh-100 d-flex flex-column bg-light p-0">
+            {/* Navbar */}
+            <nav className="navbar navbar-expand-lg navbar-dark bg-dark p-3">
+                <div className="container-fluid">
+                    <h2 className="text-white mb-0">Lista de Ubicaciones</h2>
+                    <div>
+                        <button onClick={() => navigate("/credencial")} className="btn btn-primary me-2">Regresar</button>
+                        <button onClick={() => navigate("/userlist")} className="btn btn-primary me-2">Usuarios</button>
+                        <button onClick={() => navigate("/horarioform")} className="btn btn-primary">Horarios</button>
                     </div>
                 </div>
             </nav>
-            <br /><br />
-            <h1 className="titulo-ubicaciones">Ubicaciones</h1>
-            {error && <p className="error-message">{error}</p>}
 
-            <div>
-                <label>🔎 Buscar en Ubicaciones:</label>
-                <input
-                    type="text"
-                    placeholder="Buscar ubicación..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="tabla-ubicaciones"
-                />
-            </div>
+            {/* Contenido Principal */}
+            <div className="container flex-grow-1 p-4">
+                <h1 className="text-center mb-4">Ubicaciones</h1>
+                {error && <p className="text-danger text-center">{error}</p>}
 
-            <div className="tabla-ubicaciones">
-                <button onClick={exportToExcel} className="role-button">📤 Exportar a Excel</button>
-                <input type="file" accept=".xlsx" onChange={(e) => setSelectedFile(e.target.files[0])} className="import-input" />
-                <button onClick={importFromExcel} className="role-button">📥 Importar desde Excel</button>
-            </div>
+                <div className="mb-4">
+                    <input
+                        type="text"
+                        placeholder="Buscar ubicación..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="form-control"
+                    />
+                </div>
 
-            <table className="tabla-ubicaciones">
-                <thead>
-                    <tr>
-                        <th>n.</th>
-                        <th>Nombre</th>
-                        <th>Tipo</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {currentUbicaciones.length > 0 ? (
-                        currentUbicaciones.map((ubicacion) => (
-                            <tr key={ubicacion.id_ubicacion} className="fila-ubicaciones">
-                                <td>{ubicacion.id_ubicacion}</td>
-                                <td>{ubicacion.nombre}</td>
-                                <td>{ubicacion.tipo}</td>
-                                <td className="acciones-ubicaciones">
-                                    <Link to={`/ubiedit/${ubicacion.id_ubicacion}`} className="enlace-usuario">Editar</Link>
-                                    <button onClick={() => handleDelete(ubicacion.id_ubicacion)} className="boton-usuario">Eliminar</button>
-                                </td>
-                            </tr>
-                        ))
-                    ) : (
+                <div className="mb-4 d-flex gap-2">
+                    <button onClick={exportToExcel} className="btn btn-success">
+                        <i className="bi bi-file-earmark-excel"></i> Exportar a Excel
+                    </button>
+                    <input
+                        type="file"
+                        accept=".xlsx"
+                        onChange={(e) => setSelectedFile(e.target.files[0])}
+                        className="form-control w-auto"
+                    />
+                    <button onClick={importFromExcel} className="btn btn-warning">
+                        <i className="bi bi-file-earmark-arrow-up"></i> Importar desde Excel
+                    </button>
+                </div>
+
+                <table className="table table-striped table-bordered table-hover">
+                    <thead className="table-dark">
                         <tr>
-                            <td colSpan="3" style={{ textAlign: "center" }}>No se encontraron resultados</td>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Tipo</th>
+                            <th>Acciones</th>
                         </tr>
-                    )}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {currentUbicaciones.length > 0 ? (
+                            currentUbicaciones.map((ubicacion) => (
+                                <tr key={ubicacion.id_ubicacion}>
+                                    <td>{ubicacion.id_ubicacion}</td>
+                                    <td>{ubicacion.nombre}</td>
+                                    <td>{ubicacion.tipo}</td>
+                                    <td>
+                                        <Link to={`/ubiedit/${ubicacion.id_ubicacion}`} className="btn btn-primary btn-sm me-2">
+                                            <i className="bi bi-pencil"></i> Editar
+                                        </Link>
+                                        <button onClick={() => handleDelete(ubicacion.id_ubicacion)} className="btn btn-danger btn-sm">
+                                            <i className="bi bi-trash"></i> Eliminar
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan="4" className="text-center">No se encontraron resultados</td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
 
-            <div className="paginacion" style={{ display: 'flex', justifyContent: 'flex-end', padding: '10px' }}>
-                {currentPage > 1 && (
-                    <button onClick={prevPage} className="boton-paginacion">⬅</button>
-                )}
-                {indexOfLastUbicacion < filteredUbicaciones.length && (
-                    <button onClick={nextPage} className="boton-paginacion">➡</button>
-                )}
+                <div className="d-flex justify-content-between mb-4">
+                    <button onClick={prevPage} disabled={currentPage === 1} className="btn btn-secondary">
+                        <i className="bi bi-arrow-left"></i> Anterior
+                    </button>
+                    <button onClick={nextPage} disabled={indexOfLastUbicacion >= filteredUbicaciones.length} className="btn btn-secondary">
+                        Siguiente <i className="bi bi-arrow-right"></i>
+                    </button>
+                </div>
+
+                <div className="mb-4">
+                    <Line data={prepareLineChartData()} options={{ responsive: true }} />
+                </div>
             </div>
 
-             {/* Gráfico de Ubicaciones por Tipo */}
-            <div style={{ width: '50%', margin: 'auto', paddingTop: '20px' }}>
-                <Line data={prepareLineChartData()} options={{ responsive: true }} />
-            </div>
-            <br /><br /><br />
-
-            
+            {/* Footer */}
+            <footer className="bg-dark text-white text-center p-3">
+                <p className="mb-0">Aviso de privacidad: Este sitio cumple con las normativas de protección de datos.</p>
+            </footer>
         </div>
     );
 };

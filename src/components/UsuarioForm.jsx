@@ -1,10 +1,10 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const UsuarioForm = () => {
     const navigate = useNavigate();
-
     const [usuario, setUsuario] = useState({
         nombre: "",
         app: "",
@@ -28,14 +28,12 @@ const UsuarioForm = () => {
     const handleChange = (e) => {
         const { name, value } = e.target;
 
-        // Validación de nombre y apellidos (solo letras y espacios)
         if (["nombre", "app", "apm"].includes(name) && /[^a-zA-Z\s]/.test(value)) {
             setErrores(prev => ({ ...prev, [name]: "Solo se permiten letras y espacios" }));
         } else {
             setErrores(prev => ({ ...prev, [name]: "" }));
         }
 
-        // Validación de fecha de nacimiento (mayor de 18 años)
         if (name === "fecha_nacimiento") {
             const fechaNacimiento = new Date(value);
             const hoy = new Date();
@@ -52,26 +50,6 @@ const UsuarioForm = () => {
         setUsuario({ ...usuario, [name]: value });
     };
 
-    const verificarCorreoUnico = async () => {
-        if (!usuario.correo) {
-            setErrores(prev => ({ ...prev, correo: "El correo es obligatorio" }));
-            return false;
-        }
-
-        try {
-            const response = await axios.get(`http://localhost:3001/api/usuarios?correo=${usuario.correo}`);
-            if (response.data.existe) {
-                setErrores(prev => ({ ...prev, correo: "Este correo ya está registrado" }));
-                return false;
-            }
-            setErrores(prev => ({ ...prev, correo: "" }));
-            return true;
-        } catch (error) {
-            console.error("Error verificando el correo:", error);
-            return false;
-        }
-    };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -80,56 +58,131 @@ const UsuarioForm = () => {
             return;
         }
 
-        const correoUnico = await verificarCorreoUnico();
-        if (!correoUnico) return;
-
         axios.post("http://localhost:3001/api/usuarios", usuario)
             .then(() => {
                 alert("Usuario creado");
-                navigate("/login"); // Redirigir a /login
+                navigate("/login");
             })
             .catch(error => console.error(error));
     };
 
     return (
-        <form onSubmit={handleSubmit} className="formulario-ubicaciones">
-            
+        <div className="container-fluid vh-100 d-flex flex-column bg-light p-0">
+            {/* Navbar */}
+            <nav className="navbar navbar-dark bg-dark p-3">
+                <div className="container-fluid">
+                    <h2 className="text-white mb-0">Crear Usuario</h2>
+                    <button onClick={() => navigate("/login")} className="btn btn-secondary">Salir</button>
+                </div>
+            </nav>
 
-            <input type="text" name="nombre" placeholder="Nombre" onChange={handleChange} required />
-            {errores.nombre && <p style={{ color: "red" }}>{errores.nombre}</p>}
+            {/* Formulario Centrado */}
+            <div className="container flex-grow-1 d-flex align-items-center justify-content-center">
+                <form onSubmit={handleSubmit} className="card p-4 shadow w-100 max-w-600">
+                    <div className="mb-3">
+                        <input
+                            type="text"
+                            name="nombre"
+                            placeholder="Nombre"
+                            onChange={handleChange}
+                            className="form-control"
+                            required
+                        />
+                        {errores.nombre && <p className="text-danger">{errores.nombre}</p>}
+                    </div>
+                    <div className="mb-3">
+                        <input
+                            type="text"
+                            name="app"
+                            placeholder="Apellido Paterno"
+                            onChange={handleChange}
+                            className="form-control"
+                            required
+                        />
+                        {errores.app && <p className="text-danger">{errores.app}</p>}
+                    </div>
+                    <div className="mb-3">
+                        <input
+                            type="text"
+                            name="apm"
+                            placeholder="Apellido Materno"
+                            onChange={handleChange}
+                            className="form-control"
+                            required
+                        />
+                        {errores.apm && <p className="text-danger">{errores.apm}</p>}
+                    </div>
+                    <div className="mb-3">
+                        <input
+                            type="email"
+                            name="correo"
+                            placeholder="Correo"
+                            onChange={handleChange}
+                            className="form-control"
+                            required
+                        />
+                        {errores.correo && <p className="text-danger">{errores.correo}</p>}
+                    </div>
+                    <div className="mb-3">
+                        <input
+                            type="password"
+                            name="pass"
+                            placeholder="Contraseña"
+                            onChange={handleChange}
+                            className="form-control"
+                            required
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <select
+                            name="sexo"
+                            value={usuario.sexo}
+                            onChange={handleChange}
+                            className="form-select"
+                            required
+                        >
+                            <option value="">Selecciona Sexo</option>
+                            <option value="Masculino">Masculino</option>
+                            <option value="Femenino">Femenino</option>
+                            <option value="Otro">Otro</option>
+                        </select>
+                    </div>
+                    <div className="mb-3">
+                        <select
+                            name="rol"
+                            value={usuario.rol}
+                            onChange={handleChange}
+                            className="form-select"
+                            required
+                        >
+                            <option value="">Selecciona Rol</option>
+                            <option value="Admin">Admin</option>
+                            <option value="Usuario">Usuario</option>
+                            <option value="Moderador">Moderador</option>
+                        </select>
+                    </div>
+                    <div className="mb-3">
+                        <input
+                            type="date"
+                            name="fecha_nacimiento"
+                            value={usuario.fecha_nacimiento}
+                            onChange={handleChange}
+                            className="form-control"
+                            required
+                        />
+                        {errores.fecha_nacimiento && <p className="text-danger">{errores.fecha_nacimiento}</p>}
+                    </div>
+                    <div className="d-grid gap-2">
+                        <button type="submit" className="btn btn-primary">Crear Usuario</button>
+                    </div>
+                </form>
+            </div>
 
-            <input type="text" name="app" placeholder="Apellido Paterno" onChange={handleChange} required />
-            {errores.app && <p style={{ color: "red" }}>{errores.app}</p>}
-
-            <input type="text" name="apm" placeholder="Apellido Materno" onChange={handleChange} required />
-            {errores.apm && <p style={{ color: "red" }}>{errores.apm}</p>}
-
-            <input type="email" name="correo" placeholder="Correo" onChange={handleChange} required />
-            {errores.correo && <p style={{ color: "red" }}>{errores.correo}</p>}
-
-            <input type="password" name="pass" placeholder="Contraseña" onChange={handleChange} required />
-
-            <select className="select" name="sexo" value={usuario.sexo} onChange={handleChange} required>
-                <option value="">Selecciona Sexo</option>
-                <option value="Masculino">Masculino</option>
-                <option value="Femenino">Femenino</option>
-                <option value="Otro">Otro</option>
-            </select>
-            <br />
-
-            <select className="select" name="rol" value={usuario.rol} onChange={handleChange} required>
-                <option value="">Selecciona Rol</option>
-                <option value="Admin">Admin</option>
-                <option value="Usuario">Usuario</option>
-                <option value="Moderador">Moderador</option>
-            </select>
-
-            <input type="date" name="fecha_nacimiento" value={usuario.fecha_nacimiento} onChange={handleChange} required />
-            {errores.fecha_nacimiento && <p style={{ color: "red" }}>{errores.fecha_nacimiento}</p>}
-
-            <button className="login-button" type="submit">Crear usuario</button>
-            <button className='login-button-s' onClick={() => navigate("/login")}>Salir</button>
-        </form>
+            {/* Footer */}
+            <footer className="bg-dark text-white text-center p-3">
+                <p className="mb-0">Aviso de privacidad: Este sitio cumple con las normativas de protección de datos.</p>
+            </footer>
+        </div>
     );
 };
 

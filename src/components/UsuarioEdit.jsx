@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const UsuarioEdit = () => {
     const { id } = useParams();
@@ -24,129 +25,133 @@ const UsuarioEdit = () => {
 
     const handleChange = (e) => {
         setUsuario({ ...usuario, [e.target.name]: e.target.value });
-    }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         axios.put(`http://localhost:3001/api/usuarios/${id}`, usuario)
             .then(() => alert("Usuario actualizado"))
             .catch(error => console.error(error));
-    }
+    };
 
     return (
-        <div class="fondo-principal">
-  <h1 class="titulo-principal">Editar Usuario</h1>
-  <form class="formulario-edicion" onSubmit={handleSubmit}>
-    <div class="campo-entrada">
-      <input
-        type="text"
-        id="nombre"
-        name="nombre"
-        placeholder="nombre"
-        value={usuario.nombre}
-        onChange={handleChange}
-        class="input-texto"
-      />
-    </div>
-    <div class="campo-entrada">
-      <input
-        type="text"
-        id="app"
-        name="app"
-        placeholder="apellido paterno"
-        value={usuario.app}
-        onChange={handleChange}
-        class="input-texto"
-      />
-    </div>
-    <div class="campo-entrada">
-      <input
-        type="text"
-        id="apm"
-        name="apm"
-        placeholder="apellido materno"
-        value={usuario.apm}
-        onChange={handleChange}
-        class="input-texto"
-      />
-    </div>
-    <div class="campo-entrada">
-      <input
-        type="email"
-        id="correo"
-        name="correo"
-        placeholder="correo"
-        value={usuario.correo}
-        onChange={handleChange}
-        class="input-texto"
-      />
-    </div>
-    <div class="campo-entrada">
-      <input
-        type="text"
-        id="sexo"
-        name="sexo"
-        placeholder="sexo"
-        value={usuario.sexo}
-        onChange={handleChange}
-        class="input-texto"
-      />
-    </div>
-    <div class="campo-entrada">
-      <input
-        type="text"
-        id="rol"
-        name="rol"
-        placeholder="rol"
-        value={usuario.rol}
-        onChange={handleChange}
-        class="input-texto"
-      />
-    </div>
-    <div class="campo-entrada">
-      <input
-        type="date"
-        id="fecha_nacimiento"
-        name="fecha_nacimiento"
-        placeholder="fecha de nacimiento"
-        value={usuario.fecha_nacimiento}
-        onChange={handleChange}
-        class="input-texto"
-      />
-    </div>
-    <div class="campo-entrada">
-      <input
-        type="text"
-        id="huella"
-        name="huella"
-        placeholder="huella"
-        value={usuario.huella}
-        onChange={handleChange}
-        class="input-texto"
-      />
-    </div>
-    <div class="campo-entrada">
-      <input
-        type="password"
-        id="pass"
-        name="pass"
-        placeholder="contraseña"
-        value={usuario.pass}
-        onChange={handleChange}
-        class="input-texto"
-      />
-    </div>
-    <button type="submit" class="boton-actualizar">Actualizar</button>
-    <Link to="/userlist" class="enlace-regresar">
-    <button class="boton-actualizar">Regresar</button>
-  </Link>
-  </form>
-  <div className="footer-section">
-     <p>Aviso de privacidad: Este sitio cumple con las normativas de protección de datos.</p>
-  </div>
-  
-</div>
+        <div className="container-fluid vh-100 d-flex flex-column bg-light p-0">
+            {/* Navbar */}
+            <nav className="navbar navbar-dark bg-dark p-3">
+                <div className="container-fluid">
+                    <h2 className="text-white mb-0">Editar Usuario</h2>
+                    <Link to="/userlist" className="btn btn-secondary">Regresar</Link>
+                </div>
+            </nav>
+
+            {/* Formulario Centrado */}
+            <div className="container flex-grow-1 d-flex align-items-center justify-content-center">
+                <form onSubmit={handleSubmit} className="card p-4 shadow w-100 max-w-600">
+                    <div className="mb-3">
+                        <input
+                            type="text"
+                            name="nombre"
+                            placeholder="Nombre"
+                            value={usuario.nombre}
+                            onChange={handleChange}
+                            className="form-control"
+                            required
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <input
+                            type="text"
+                            name="app"
+                            placeholder="Apellido Paterno"
+                            value={usuario.app}
+                            onChange={handleChange}
+                            className="form-control"
+                            required
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <input
+                            type="text"
+                            name="apm"
+                            placeholder="Apellido Materno"
+                            value={usuario.apm}
+                            onChange={handleChange}
+                            className="form-control"
+                            required
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <input
+                            type="email"
+                            name="correo"
+                            placeholder="Correo"
+                            value={usuario.correo}
+                            onChange={handleChange}
+                            className="form-control"
+                            required
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <select
+                            name="sexo"
+                            value={usuario.sexo}
+                            onChange={handleChange}
+                            className="form-select"
+                            required
+                        >
+                            <option value="">Selecciona Sexo</option>
+                            <option value="Masculino">Masculino</option>
+                            <option value="Femenino">Femenino</option>
+                            <option value="Otro">Otro</option>
+                        </select>
+                    </div>
+                    <div className="mb-3">
+                        <select
+                            name="rol"
+                            value={usuario.rol}
+                            onChange={handleChange}
+                            className="form-select"
+                            required
+                        >
+                            <option value="">Selecciona Rol</option>
+                            <option value="Admin">Admin</option>
+                            <option value="Usuario">Usuario</option>
+                            <option value="Moderador">Moderador</option>
+                        </select>
+                    </div>
+                    <div className="mb-3">
+                        <input
+                            type="date"
+                            name="fecha_nacimiento"
+                            value={usuario.fecha_nacimiento}
+                            onChange={handleChange}
+                            className="form-control"
+                            required
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <input
+                            type="password"
+                            name="pass"
+                            placeholder="Contraseña"
+                            value={usuario.pass}
+                            onChange={handleChange}
+                            className="form-control"
+                            required
+                        />
+                    </div>
+                    <div className="d-grid gap-2">
+                        <button type="submit" className="btn btn-primary">Actualizar</button>
+                    </div>
+                </form>
+            </div>
+
+            {/* Footer */}
+            <footer className="bg-dark text-white text-center p-3">
+                <p className="mb-0">Aviso de privacidad: Este sitio cumple con las normativas de protección de datos.</p>
+            </footer>
+        </div>
     );
-}
+};
 
 export default UsuarioEdit;
