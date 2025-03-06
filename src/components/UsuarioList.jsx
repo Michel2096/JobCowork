@@ -4,6 +4,11 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import * as XLSX from "xlsx";
+import { Bar } from "react-chartjs-2"; // Importa el gráfico de barras de Chart.js
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+
+// Registra los componentes de Chart.js que vas a usar (necesario para que Chart.js funcione)
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const UsuarioList = () => {
     const navigate = useNavigate();
@@ -91,6 +96,29 @@ const UsuarioList = () => {
         setSelectedFile(event.target.files[0]);
     };
 
+
+    // 🔹 Preparar los datos para el gráfico
+    const prepareChartData = () => {
+        // Se cuenta cuántos usuarios hay por cada sexo
+        const sexoCount = usuarios.reduce((acc, usuario) => {
+            acc[usuario.sexo] = (acc[usuario.sexo] || 0) + 1;
+            return acc;
+        }, {});
+        return {
+            labels: Object.keys(sexoCount), // etiquetas
+            datasets: [
+                {
+                    label: 'Usuarios por Sexo', // Título de la gráfica
+                    data: Object.values(sexoCount), // Datos de la gráfica (conteo de usuarios por rol)
+                    backgroundColor: 'rgba(234, 243, 243, 0.6)', // Color de fondo de las barras
+                    borderColor: 'rgb(242, 241, 241)', // Color del borde de las barras
+                    borderWidth: 5,
+                }
+            ],
+        };
+    };
+
+
     return (
         <div className="fond-usuario">
             <nav className="navbar">
@@ -106,6 +134,7 @@ const UsuarioList = () => {
 
             <h1 className="titulo-horario">REGISTRAR USUARIO</h1>
             <UsuarioForm />
+
 
             <div className="tabla-ubicaciones">
                 <label>🔎 Buscar en Usuarios:</label>
@@ -179,6 +208,12 @@ const UsuarioList = () => {
                 {indexOfLastUsuario < filteredUsuarios.length && (
                     <button onClick={nextPage} className="boton-paginacion">➡️</button>
                 )}
+            </div>
+
+            
+            {/* 🔹 Gráfico de Usuarios por Rol */}
+            <div style={{ width: '80%', margin: 'auto', paddingTop: '20px' }}>
+                <Bar data={prepareChartData()} options={{ responsive: true }} /> {/* Muestra el gráfico */}
             </div>
 
             <br /><br /><br />

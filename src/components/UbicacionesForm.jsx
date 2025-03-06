@@ -52,6 +52,7 @@ const UbicacionesForm = () => {
   <button onClick={() => navigate("/credencial")} className="boton-regresar">
     Regresar
   </button>
+  
 </div>
     );
 }; 
