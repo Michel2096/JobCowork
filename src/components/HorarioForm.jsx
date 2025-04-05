@@ -14,11 +14,11 @@ const HorarioForm = () => {
     });
 
     useEffect(() => {
-        axios.get("https://api.mbpindustries.xdn.com.mx/usuarios")
+        axios.get("https://api.mbpindustries.xdn.com.mx/usuarios/")
             .then(response => setUsuarios(response.data))
             .catch(error => console.error("Error al obtener usuarios:", error));
 
-        axios.get("https://api.mbpindustries.xdn.com.mx/ubicacion")
+        axios.get("https://api.mbpindustries.xdn.com.mx/ubicacion/")
             .then(response => setUbicaciones(response.data))
             .catch(error => console.error("Error al obtener ubicaciones:", error));
     }, []);

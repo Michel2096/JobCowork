@@ -18,7 +18,7 @@ const UbicacionesList = () => {
     const ubicacionesPerPage = 4;
 
     useEffect(() => {
-        axios.get("https://api.mbpindustries.xdn.com.mx/ubicacion")
+        axios.get("https://api.mbpindustries.xdn.com.mx/ubicacion/")
             .then(response => setUbicaciones(response.data))
             .catch(error => {
                 console.error(error);
