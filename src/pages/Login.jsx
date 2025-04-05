@@ -86,7 +86,7 @@ const Login = () => {
                     <div className="mb-3">
                         <input
                             type="password"
-                            name="pass"
+                            name="passw"
                             placeholder="Contraseña"
                             onChange={handleChange}
                             className="form-control"
