@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Login = () => {
     const navigate = useNavigate();
-    const [usuario, setUsuario] = useState({ correo: '', pass: '' });
+    const [usuario, setUsuario] = useState({ correo: '', passw: '' }); // Cambiado "pass" a "passw"
     const [error, setError] = useState('');
     const [intentos, setIntentos] = useState(0);
     const [bloqueado, setBloqueado] = useState(false);
@@ -37,25 +37,27 @@ const Login = () => {
 
         try {
             const response = await axios.post('https://api.mbpindustries.xdn.com.mx/usuarios/login', usuario);
-            const { usuario: user, token } = response.data;
+            console.log('Respuesta de la API:', response.data); // Para depuración
+            const { user, access_token } = response.data; // La API devuelve "user" y "access_token"
 
             if (!user) {
                 throw new Error('Usuario no encontrado');
             }
 
-            localStorage.setItem('usuario', JSON.stringify(user));  
-            localStorage.setItem('token', token);  
+            localStorage.setItem('usuario', JSON.stringify(user));
+            localStorage.setItem('token', access_token);
             setError('');
-            localStorage.setItem('intentosFallidos', '0'); // Reinicia intentos al éxito
-            navigate('/credencial'); 
+            localStorage.setItem('intentosFallidos', '0');
+            navigate('/credencial');
         } catch (error) {
+            console.error('Error en la solicitud:', error.response?.data || error.message); // Para depuración
             const nuevosIntentos = intentos + 1;
             setIntentos(nuevosIntentos);
             localStorage.setItem('intentosFallidos', nuevosIntentos);
             setError('Credenciales incorrectas. Inténtalo de nuevo.');
 
             if (nuevosIntentos >= 3) {
-                const tiempoDesbloqueo = new Date().getTime() + 3 * 60 * 1000; // 3 minutos
+                const tiempoDesbloqueo = new Date().getTime() + 3 * 60 * 1000;
                 localStorage.setItem('bloqueoTiempo', tiempoDesbloqueo);
                 setBloqueado(true);
                 setTimeout(() => {
@@ -86,7 +88,7 @@ const Login = () => {
                     <div className="mb-3">
                         <input
                             type="password"
-                            name="passw"
+                            name="passw" // Ajustado a "passw" para coincidir con la API y BD
                             placeholder="Contraseña"
                             onChange={handleChange}
                             className="form-control"
