@@ -20,18 +20,18 @@ const HorarioList = () => {
     const horariosPerPage = 4;
 
     useEffect(() => {
-        axios.get("http://localhost:3001/api/horarios")
+        axios.get("https://api.mbpindustries.xdn.com.mx/horarios")
             .then(response => setHorarios(response.data))
             .catch(error => {
                 console.error(error);
                 setError("Error al cargar los horarios. Por favor, intenta de nuevo más tarde.");
             });
 
-        axios.get("http://localhost:3001/api/usuarios")
+        axios.get("https://api.mbpindustries.xdn.com.mx/usuarios")
             .then(response => setUsuarios(response.data))
             .catch(error => console.error("Error al obtener usuarios:", error));
 
-        axios.get("http://localhost:3001/api/ubicaciones")
+        axios.get("https://api.mbpindustries.xdn.com.mx/ubicacion")
             .then(response => setUbicaciones(response.data))
             .catch(error => console.error("Error al obtener ubicaciones:", error));
     }, []);
@@ -42,7 +42,7 @@ const HorarioList = () => {
     };
 
     const handleDelete = async (id) => {
-        axios.delete(`http://localhost:3001/api/horarios/${id}`)
+        axios.delete(`https://api.mbpindustries.xdn.com.mx/horarios/${id}`)
             .then(() => setHorarios(horarios.filter(horario => horario.id_horarios !== id)))
             .catch(error => console.error(error));
     };

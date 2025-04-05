@@ -19,13 +19,13 @@ const UsuarioList = () => {
     const usuariosPerPage = 5;
 
     useEffect(() => {
-        axios.get("http://localhost:3001/api/usuarios")
+        axios.get("https://api.mbpindustries.xdn.com.mx/usuarios")
             .then(response => setUsuarios(response.data))
             .catch(error => console.error(error));
     }, []);
 
     const handleDelete = async (id) => {
-        axios.delete(`http://localhost:3001/api/usuarios/${id}`)
+        axios.delete(`https://api.mbpindustries.xdn.com.mx/usuarios/${id}`)
             .then(() => setUsuarios(usuarios.filter(usuario => usuario.id_usuario !== id)))
             .catch(error => console.error(error));
     };
@@ -76,7 +76,7 @@ const UsuarioList = () => {
             const sheet = workbook.Sheets[sheetName];
             const importedData = XLSX.utils.sheet_to_json(sheet);
 
-            axios.post("http://localhost:3001/api/usuarios/importar", { usuarios: importedData })
+            axios.post("https://api.mbpindustries.xdn.com.mx/usuarios/importar", { usuarios: importedData })
                 .then(() => {
                     setUsuarios([...usuarios, ...importedData]);
                     alert("Usuarios importados correctamente");

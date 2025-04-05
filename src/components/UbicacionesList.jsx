@@ -18,7 +18,7 @@ const UbicacionesList = () => {
     const ubicacionesPerPage = 4;
 
     useEffect(() => {
-        axios.get("http://localhost:3001/api/ubicaciones")
+        axios.get("https://api.mbpindustries.xdn.com.mx/ubicacion")
             .then(response => setUbicaciones(response.data))
             .catch(error => {
                 console.error(error);
@@ -27,7 +27,7 @@ const UbicacionesList = () => {
     }, []);
 
     const handleDelete = async (id) => {
-        axios.delete(`http://localhost:3001/api/ubicaciones/${id}`)
+        axios.delete(`https://api.mbpindustries.xdn.com.mx/ubicacion/${id}`)
             .then(() => setUbicaciones(ubicaciones.filter(ubicacion => ubicacion.id_ubicacion !== id)))
             .catch(error => console.error(error));
     };
@@ -73,7 +73,7 @@ const UbicacionesList = () => {
             const sheet = workbook.Sheets[sheetName];
             const importedData = XLSX.utils.sheet_to_json(sheet);
 
-            axios.post("http://localhost:3001/api/ubicaciones/importar", { ubicaciones: importedData })
+            axios.post("https://api.mbpindustries.xdn.com.mx/ubicaciones/importar", { ubicaciones: importedData })
                 .then(() => {
                     setUbicaciones([...ubicaciones, ...importedData]);
                     alert("Ubicaciones importadas correctamente");

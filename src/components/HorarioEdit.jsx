@@ -12,7 +12,7 @@ const HorarioEdit = () => {
     });
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/api/horarios/${id}`)
+        axios.get(`https://api.mbpindustries.xdn.com.mx/horarios/${id}`)
             .then(response => setHorario(response.data))
             .catch(error => console.error(error));
     }, [id]);
@@ -23,7 +23,7 @@ const HorarioEdit = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        axios.put(`http://localhost:3001/api/horarios/${id}`, horario)
+        axios.put(`https://api.mbpindustries.xdn.com.mx/horarios/${id}`, horario)
             .then(() => alert("Horario actualizado"))
             .catch(error => console.error(error));
     }

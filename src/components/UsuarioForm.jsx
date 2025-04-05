@@ -58,7 +58,7 @@ const UsuarioForm = () => {
             return;
         }
 
-        axios.post("http://127.0.0.1:5000/api/usuarios", usuario)
+        axios.post("https://api.mbpindustries.xdn.com.mx/usuarios/", usuario)
             .then(() => {
                 alert("Usuario creado");
                 navigate("/login");

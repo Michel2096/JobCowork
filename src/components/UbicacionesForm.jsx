@@ -17,7 +17,7 @@ const UbicacionesForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        axios.post("http://localhost:3001/api/ubicaciones", ubicacion)
+        axios.post("https://api.mbpindustries.xdn.com.mx/ubicacion/", ubicacion)
         .then(() => alert("Ubicación registrada"))
         .catch(error => console.error(error));
     };

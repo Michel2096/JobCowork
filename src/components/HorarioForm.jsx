@@ -14,11 +14,11 @@ const HorarioForm = () => {
     });
 
     useEffect(() => {
-        axios.get("http://localhost:3001/api/usuarios")
+        axios.get("https://api.mbpindustries.xdn.com.mx/usuarios")
             .then(response => setUsuarios(response.data))
             .catch(error => console.error("Error al obtener usuarios:", error));
 
-        axios.get("http://localhost:3001/api/ubicaciones")
+        axios.get("https://api.mbpindustries.xdn.com.mx/ubicacion")
             .then(response => setUbicaciones(response.data))
             .catch(error => console.error("Error al obtener ubicaciones:", error));
     }, []);
@@ -29,7 +29,7 @@ const HorarioForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        axios.post("http://localhost:3001/api/horarios", horario)
+        axios.post("https://api.mbpindustries.xdn.com.mx/horarios/", horario)
             .then(() => alert("Horario registrado"))
             .catch(error => console.error(error));
     };

@@ -18,7 +18,7 @@ const UsuarioEdit = () => {
     });
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/api/usuarios/${id}`)
+        axios.get(`https://api.mbpindustries.xdn.com.mx/usuarios/${id}`)
             .then(response => setUsuario(response.data))
             .catch(error => console.error(error));
     }, [id]);
@@ -29,7 +29,7 @@ const UsuarioEdit = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        axios.put(`http://localhost:3001/api/usuarios/${id}`, usuario)
+        axios.put(`https://api.mbpindustries.xdn.com.mx/usuarios/${id}`, usuario)
             .then(() => alert("Usuario actualizado"))
             .catch(error => console.error(error));
     };

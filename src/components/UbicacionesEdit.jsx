@@ -11,7 +11,7 @@ const UbicacionesEdit = () => {
     });
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/api/ubicaciones/${id}`)
+        axios.get(`https://api.mbpindustries.xdn.com.mx/ubicacion/${id}`)
             .then(response => setUbicacion(response.data))
             .catch(error => console.error(error));
     }, [id]);
@@ -22,7 +22,7 @@ const UbicacionesEdit = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        axios.put(`http://localhost:3001/api/ubicaciones/${id}`, ubicacion)
+        axios.put(`https://api.mbpindustries.xdn.com.mx/ubicacion/${id}`, ubicacion)
             .then(() => {
                 alert("Ubicación actualizada");
                 navigate("/ubicacioneslist"); // Redirigir a la lista de ubicaciones
