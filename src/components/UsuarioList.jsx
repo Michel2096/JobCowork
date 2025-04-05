@@ -19,7 +19,7 @@ const UsuarioList = () => {
     const usuariosPerPage = 5;
 
     useEffect(() => {
-        axios.get("https://api.mbpindustries.xdn.com.mx/usuarios")
+        axios.get("https://api.mbpindustries.xdn.com.mx/usuarios/")
             .then(response => setUsuarios(response.data))
             .catch(error => console.error(error));
     }, []);
