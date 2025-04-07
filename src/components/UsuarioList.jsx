@@ -161,6 +161,7 @@ const UsuarioList = () => {
                             <th>Apellido Paterno</th>
                             <th>Apellido Materno</th>
                             <th>Correo</th>
+                            <th>huella</th>
                             <th>Sexo</th>
                             <th>Rol</th>
                             <th>Fecha de Nacimiento</th>
@@ -175,6 +176,7 @@ const UsuarioList = () => {
                                 <td>{usuario.app}</td>
                                 <td>{usuario.apm}</td>
                                 <td>{usuario.correo}</td>
+                                <td>{usuario.huella}</td>
                                 <td>{usuario.sexo}</td>
                                 <td>{usuario.rol}</td>
                                 <td>{usuario.fecha_nacimiento}</td>

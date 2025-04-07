@@ -1,19 +1,32 @@
 import { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom'; // Añadimos useNavigate
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const UbicacionesEdit = () => {
     const { id } = useParams();
+    const navigate = useNavigate(); // Definimos navigate
     const [ubicacion, setUbicacion] = useState({
         nombre: "",
         tipo: ""
     });
+    const [error, setError] = useState(""); // Estado para manejar errores
 
     useEffect(() => {
-        axios.get(`https://api.mbpindustries.xdn.com.mx/ubicacion/${id}`)
-            .then(response => setUbicacion(response.data))
-            .catch(error => console.error(error));
+        const fetchUbicacion = async () => {
+            try {
+                const response = await axios.get(`https://api.mbpindustries.xdn.com.mx/ubicacion/${id}`);
+                console.log("Datos recibidos de la API:", response.data); // Depuración
+                setUbicacion({
+                    nombre: response.data.nombre || "", // Aseguramos que coincida con la respuesta
+                    tipo: response.data.tipo || ""
+                });
+            } catch (error) {
+                console.error("Error al cargar la ubicación:", error);
+                setError("No se pudo cargar la ubicación. Verifica el ID o la conexión.");
+            }
+        };
+        fetchUbicacion();
     }, [id]);
 
     const handleChange = (e) => {
@@ -22,12 +35,14 @@ const UbicacionesEdit = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        axios.put(`https://api.mbpindustries.xdn.com.mx/ubicacion/${id}`, ubicacion)
-            .then(() => {
-                alert("Ubicación actualizada");
-                navigate("/ubicacioneslist"); // Redirigir a la lista de ubicaciones
-            })
-            .catch(error => console.error(error));
+        try {
+            await axios.put(`https://api.mbpindustries.xdn.com.mx/ubicacion/${id}`, ubicacion);
+            alert("Ubicación actualizada");
+            navigate("/ubicacioneslist"); // Redirigir a la lista de ubicaciones
+        } catch (error) {
+            console.error("Error al actualizar la ubicación:", error);
+            setError("No se pudo actualizar la ubicación. Intenta de nuevo.");
+        }
     };
 
     return (
@@ -36,13 +51,14 @@ const UbicacionesEdit = () => {
             <nav className="navbar navbar-dark bg-dark p-3">
                 <div className="container-fluid">
                     <h2 className="text-white mb-0">Editar Ubicación</h2>
-                    <Link to="/ubicacioneslist" className="btn btn-secondary">Regresar</Link>
+                    <Link to="/ubiform" className="btn btn-secondary">Regresar</Link>
                 </div>
             </nav>
 
             {/* Formulario Centrado */}
             <div className="container flex-grow-1 d-flex align-items-center justify-content-center">
-                <form onSubmit={handleSubmit} className="card p-4 shadow w-100 max-w-500">
+                <form onSubmit={handleSubmit} className="card p-4 shadow w-100" style={{ maxWidth: '500px' }}>
+                    {error && <p className="text-danger text-center">{error}</p>}
                     <div className="mb-3">
                         <input
                             type="text"
