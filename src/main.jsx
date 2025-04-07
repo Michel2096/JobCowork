@@ -10,7 +10,7 @@ import UsuarioEdit from "./components/UsuarioEdit"
 import Ubicaciones from "./pages/Ubicaciones";
 import UbicacionesList from "./components/UbicacionesList";
 import UbicacionesEdit from "./components/UbicacionesEdit";
-import HorariosList from "./components/HorarioList";
+import HorarioList from "./components/HorarioList";
 import Horarios from "./pages/Horarios";
 import HorarioEdit from "./components/HorarioEdit";
 
@@ -35,7 +35,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 
       <Route path="/horarioform" element={<Horarios />} />
       <Route path="/horarioedit/:id" element={<HorarioEdit />} />
-      <Route path="/horariolist" element={<HorariosList />} />
+      <Route path="/horariolist" element={<HorarioList />} />
       
     </Routes>
   </BrowserRouter>
