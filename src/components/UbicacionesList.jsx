@@ -165,7 +165,7 @@ const UbicacionesList = () => {
                                     <td>{ubicacion.nombre}</td>
                                     <td>{ubicacion.tipo}</td>
                                     <td>
-                                        <Link to={`/ubicacion/${ubicacion.id_ubicacion}`} className="btn btn-primary btn-sm me-2">
+                                        <Link to={`/ubiedit/${ubicacion.id_ubicacion}`} className="btn btn-primary btn-sm me-2">
                                             <i className="bi bi-pencil"></i> Editar
                                         </Link>
                                         <button onClick={() => handleDelete(ubicacion.id_ubicacion)} className="btn btn-danger btn-sm">

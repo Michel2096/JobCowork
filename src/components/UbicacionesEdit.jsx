@@ -12,21 +12,27 @@ const UbicacionesEdit = () => {
     });
     const [error, setError] = useState(""); // Estado para manejar errores
 
+    // useEffect(() => {
+    //    const fetchUbicacion = async () => {
+    //        try {
+    //            const response = await axios.get(`https://api.mbpindustries.xdn.com.mx/ubicacion/${id}`);
+    //            console.log("Datos recibidos de la API:", response.data); // Depuración
+    //            setUbicacion({
+    //                nombre: response.data.nombre || "", // Aseguramos que coincida con la respuesta
+    //                tipo: response.data.tipo || ""
+    //            });
+    //        } catch (error) {
+    //            console.error("Error al cargar la ubicación:", error);
+    //            setError("No se pudo cargar la ubicación. Verifica el ID o la conexión.");
+    //        }
+    //    };
+    //    fetchUbicacion();
+    //}, [id]);
+
     useEffect(() => {
-        const fetchUbicacion = async () => {
-            try {
-                const response = await axios.get(`https://api.mbpindustries.xdn.com.mx/ubicacion/${id}`);
-                console.log("Datos recibidos de la API:", response.data); // Depuración
-                setUbicacion({
-                    nombre: response.data.nombre || "", // Aseguramos que coincida con la respuesta
-                    tipo: response.data.tipo || ""
-                });
-            } catch (error) {
-                console.error("Error al cargar la ubicación:", error);
-                setError("No se pudo cargar la ubicación. Verifica el ID o la conexión.");
-            }
-        };
-        fetchUbicacion();
+        axios.get(`https://api.mbpindustries.xdn.com.mx/ubicacion/${id}`)
+            .then(response => setUbicacion(response.data))
+            .catch(error => console.error(error));
     }, [id]);
 
     const handleChange = (e) => {

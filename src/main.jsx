@@ -30,7 +30,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <Route path="/useredit/:id" element={<UsuarioEdit />} />
 
       <Route path="/ubiform" element={<Ubicaciones />} />
-      <Route path="/ubicacion/:id" element={<UbicacionesEdit />} />
+      <Route path="/ubiedit/:id" element={<UbicacionesEdit />} />
       <Route path="/ubilist" element={<UbicacionesList />} />
 
       <Route path="/horarioform" element={<Horarios />} />
