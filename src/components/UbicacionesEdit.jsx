@@ -70,6 +70,7 @@ const UbicacionesEdit = () => {
                             type="text"
                             id="nombre"
                             name="nombre"
+                            placeholder="Nombre"
                             value={ubicacion.nombre}
                             onChange={handleChange}
                             className="form-control"
@@ -81,6 +82,7 @@ const UbicacionesEdit = () => {
                             type="text"
                             id="tipo"
                             name="tipo"
+                            placeholder="Tipo"
                             value={ubicacion.tipo}
                             onChange={handleChange}
                             className="form-control"
