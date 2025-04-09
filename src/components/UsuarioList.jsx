@@ -110,7 +110,7 @@ const UsuarioList = () => {
     };
 
     return (
-        <div className="container-fluid vh-100 d-flex flex-column bg-light p-0">
+        <div className="main-container">
             {/* Navbar */}
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark p-3">
                 <div className="container-fluid">
@@ -124,7 +124,7 @@ const UsuarioList = () => {
             </nav>
 
             {/* Contenido Principal */}
-            <div className="container flex-grow-1 p-4">
+            <div className="content-container">
                 <h1 className="text-center mb-4">REGISTRAR USUARIO</h1>
                 <UsuarioForm />
 
@@ -138,7 +138,7 @@ const UsuarioList = () => {
                     />
                 </div>
 
-                <div className="mb-4 d-flex gap-2">
+                <div className="mb-4 d-flex gap-2 flex-wrap">
                     <button onClick={exportToExcel} className="btn btn-success">
                         <i className="bi bi-file-earmark-excel"></i> Exportar a Excel
                     </button>
@@ -153,45 +153,47 @@ const UsuarioList = () => {
                     </button>
                 </div>
 
-                <table className="table table-striped table-bordered table-hover">
-                    <thead className="table-dark">
-                        <tr>
-                            <th>Id</th>
-                            <th>Nombre</th>
-                            <th>Apellido Paterno</th>
-                            <th>Apellido Materno</th>
-                            <th>Correo</th>
-                            <th>huella</th>
-                            <th>Sexo</th>
-                            <th>Rol</th>
-                            <th>Fecha de Nacimiento</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {currentUsuarios.map((usuario) => (
-                            <tr key={usuario.id_usuario}>
-                                <td>{usuario.id_usuario}</td>
-                                <td>{usuario.nombre}</td>
-                                <td>{usuario.app}</td>
-                                <td>{usuario.apm}</td>
-                                <td>{usuario.correo}</td>
-                                <td>{usuario.huella}</td>
-                                <td>{usuario.sexo}</td>
-                                <td>{usuario.rol}</td>
-                                <td>{usuario.fecha_nacimiento}</td>
-                                <td>
-                                    <Link to={`/useredit/${usuario.id_usuario}`} className="btn btn-primary btn-sm me-2">
-                                        <i className="bi bi-pencil"></i> Editar
-                                    </Link>
-                                    <button onClick={() => handleDelete(usuario.id_usuario)} className="btn btn-danger btn-sm">
-                                        <i className="bi bi-trash"></i> Eliminar
-                                    </button>
-                                </td>
+                <div className="table-responsive">
+                    <table className="table table-striped table-bordered table-hover">
+                        <thead className="table-dark">
+                            <tr>
+                                <th>Id</th>
+                                <th>Nombre</th>
+                                <th>Apellido Paterno</th>
+                                <th>Apellido Materno</th>
+                                <th>Correo</th>
+                                <th>Huella</th>
+                                <th>Sexo</th>
+                                <th>Rol</th>
+                                <th>Fecha de Nacimiento</th>
+                                <th>Acciones</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {currentUsuarios.map((usuario) => (
+                                <tr key={usuario.id_usuario}>
+                                    <td>{usuario.id_usuario}</td>
+                                    <td>{usuario.nombre}</td>
+                                    <td>{usuario.app}</td>
+                                    <td>{usuario.apm}</td>
+                                    <td>{usuario.correo}</td>
+                                    <td>{usuario.huella}</td>
+                                    <td>{usuario.sexo}</td>
+                                    <td>{usuario.rol}</td>
+                                    <td>{usuario.fecha_nacimiento}</td>
+                                    <td>
+                                        <Link to={`/useredit/${usuario.id_usuario}`} className="btn btn-primary btn-sm me-2">
+                                            <i className="bi bi-pencil"></i> Editar
+                                        </Link>
+                                        <button onClick={() => handleDelete(usuario.id_usuario)} className="btn btn-danger btn-sm">
+                                            <i className="bi bi-trash"></i> Eliminar
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
 
                 <div className="d-flex justify-content-between mb-4">
                     <button onClick={prevPage} disabled={currentPage === 1} className="btn btn-secondary">

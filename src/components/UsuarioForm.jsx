@@ -67,7 +67,7 @@ const UsuarioForm = () => {
     };
 
     return (
-        <div className="container-fluid vh-100 d-flex flex-column bg-light p-0">
+        <div className="main-container">
             {/* Navbar */}
             <nav className="navbar navbar-dark bg-dark p-3">
                 <div className="container-fluid">
@@ -77,8 +77,8 @@ const UsuarioForm = () => {
             </nav>
 
             {/* Formulario Centrado */}
-            <div className="container flex-grow-1 d-flex align-items-center justify-content-center">
-                <form onSubmit={handleSubmit} className="card p-4 shadow w-100 max-w-600">
+            <div className="content-container d-flex align-items-center justify-content-center">
+                <form onSubmit={handleSubmit} className="card p-4 shadow w-100" style={{ maxWidth: "600px" }}>
                     <div className="mb-3">
                         <input
                             type="text"

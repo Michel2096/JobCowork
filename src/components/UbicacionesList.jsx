@@ -105,7 +105,7 @@ const UbicacionesList = () => {
     };
 
     return (
-        <div className="container-fluid vh-100 d-flex flex-column bg-light p-0">
+        <div className="main-container">
             {/* Navbar */}
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark p-3">
                 <div className="container-fluid">
@@ -119,7 +119,7 @@ const UbicacionesList = () => {
             </nav>
 
             {/* Contenido Principal */}
-            <div className="container flex-grow-1 p-4">
+            <div className="content-container">
                 <h1 className="text-center mb-4">Ubicaciones</h1>
                 {error && <p className="text-danger text-center">{error}</p>}
 
@@ -133,7 +133,7 @@ const UbicacionesList = () => {
                     />
                 </div>
 
-                <div className="mb-4 d-flex gap-2">
+                <div className="mb-4 d-flex gap-2 flex-wrap">
                     <button onClick={exportToExcel} className="btn btn-success">
                         <i className="bi bi-file-earmark-excel"></i> Exportar a Excel
                     </button>
@@ -148,39 +148,41 @@ const UbicacionesList = () => {
                     </button>
                 </div>
 
-                <table className="table table-striped table-bordered table-hover">
-                    <thead className="table-dark">
-                        <tr>
-                            <th>ID</th>
-                            <th>Nombre</th>
-                            <th>Tipo</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {currentUbicaciones.length > 0 ? (
-                            currentUbicaciones.map((ubicacion) => (
-                                <tr key={ubicacion.id_ubicacion}>
-                                    <td>{ubicacion.id_ubicacion}</td>
-                                    <td>{ubicacion.nombre}</td>
-                                    <td>{ubicacion.tipo}</td>
-                                    <td>
-                                        <Link to={`/ubiedit/${ubicacion.id_ubicacion}`} className="btn btn-primary btn-sm me-2">
-                                            <i className="bi bi-pencil"></i> Editar
-                                        </Link>
-                                        <button onClick={() => handleDelete(ubicacion.id_ubicacion)} className="btn btn-danger btn-sm">
-                                            <i className="bi bi-trash"></i> Eliminar
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))
-                        ) : (
+                <div className="table-responsive">
+                    <table className="table table-striped table-bordered table-hover">
+                        <thead className="table-dark">
                             <tr>
-                                <td colSpan="4" className="text-center">No se encontraron resultados</td>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Tipo</th>
+                                <th>Acciones</th>
                             </tr>
-                        )}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {currentUbicaciones.length > 0 ? (
+                                currentUbicaciones.map((ubicacion) => (
+                                    <tr key={ubicacion.id_ubicacion}>
+                                        <td>{ubicacion.id_ubicacion}</td>
+                                        <td>{ubicacion.nombre}</td>
+                                        <td>{ubicacion.tipo}</td>
+                                        <td>
+                                            <Link to={`/ubiedit/${ubicacion.id_ubicacion}`} className="btn btn-primary btn-sm me-2">
+                                                <i className="bi bi-pencil"></i> Editar
+                                            </Link>
+                                            <button onClick={() => handleDelete(ubicacion.id_ubicacion)} className="btn btn-danger btn-sm">
+                                                <i className="bi bi-trash"></i> Eliminar
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td colSpan="4" className="text-center">No se encontraron resultados</td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
+                </div>
 
                 <div className="d-flex justify-content-between mb-4">
                     <button onClick={prevPage} disabled={currentPage === 1} className="btn btn-secondary">

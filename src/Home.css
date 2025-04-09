@@ -151,4 +151,24 @@
     color: #000000; 
   }
   
-  
+  .main-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #f8f9fa;
+}
+
+.content-container {
+    flex-grow: 1;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 95%; /* Margen pequeño en móviles */
+}
+
+@media (max-width: 768px) {
+    .content-container {
+        padding: 10px;
+        width: 90%; /* Más margen en pantallas pequeñas */
+    }
+}

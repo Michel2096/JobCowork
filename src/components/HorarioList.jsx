@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import * as XLSX from "xlsx";
 import { Bar } from "react-chartjs-2";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -89,74 +90,82 @@ const HorarioList = () => {
     };
 
     return (
-        <div className="container mt-4">
-            <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <div className="main-container">
+            <nav className="navbar navbar-expand-lg navbar-dark bg-dark p-3">
                 <div className="container-fluid">
-                    <div className="navbar-nav">
+                    <h2 className="text-white mb-0">Lista de Horarios</h2>
+                    <div>
                         <button onClick={() => navigate("/credencial")} className="btn btn-primary me-2">Regresar</button>
-                        <button className="btn btn-secondary me-2" onClick={() => navigate("/userlist")}>Usuarios</button>
-                        <button className="btn btn-secondary" onClick={() => navigate("/ubiform")}>Ubicaciones</button>
+                        <button onClick={() => navigate("/userlist")} className="btn btn-primary me-2">Usuarios</button>
+                        <button onClick={() => navigate("/ubiform")} className="btn btn-primary">Ubicaciones</button>
                     </div>
                 </div>
             </nav>
-            <br />
 
-            <h1 className="text-center">Horarios</h1>
-            {error && <div className="alert alert-danger">{error}</div>}
+            <div className="content-container">
+                <h1 className="text-center mb-4">Horarios</h1>
+                {error && <div className="alert alert-danger">{error}</div>}
 
-            <div className="mb-3">
-                <label className="form-label">🔎 Buscar en Horarios:</label>
-                <input
-                    type="text"
-                    placeholder="Buscar horario..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="form-control"
-                />
-            </div>
+                <div className="mb-3">
+                    <label className="form-label">🔎 Buscar en Horarios:</label>
+                    <input
+                        type="text"
+                        placeholder="Buscar horario..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="form-control"
+                    />
+                </div>
 
-            <table className="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Ubicación</th>
-                        <th>Hora de entrada</th>
-                        <th>Hora de salida</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {currentHorarios.length > 0 ? (
-                        currentHorarios.map((horario) => (
-                            <tr key={horario.id_horarios}>
-                                <td>{getUbicacionNombre(horario.id_ubicacion)}</td>
-                                <td>{horario.hora_entrada}</td>
-                                <td>{horario.hora_salida}</td>
-                                <td>
-                                    <Link to={`/horarioedit/${horario.id_horarios}`} className="btn btn-warning btn-sm me-2">Editar</Link>
-                                    <button onClick={() => handleDelete(horario.id_horarios)} className="btn btn-danger btn-sm">Eliminar</button>
-                                </td>
+                <div className="table-responsive">
+                    <table className="table table-striped table-bordered table-hover">
+                        <thead className="table-dark">
+                            <tr>
+                                <th>Ubicación</th>
+                                <th>Hora de entrada</th>
+                                <th>Hora de salida</th>
+                                <th>Acciones</th>
                             </tr>
-                        ))
-                    ) : (
-                        <tr>
-                            <td colSpan="4" className="text-center">No se encontraron resultados</td>
-                        </tr>
-                    )}
-                </tbody>
-            </table>
+                        </thead>
+                        <tbody>
+                            {currentHorarios.length > 0 ? (
+                                currentHorarios.map((horario) => (
+                                    <tr key={horario.id_horarios}>
+                                        <td>{getUbicacionNombre(horario.id_ubicacion)}</td>
+                                        <td>{horario.hora_entrada}</td>
+                                        <td>{horario.hora_salida}</td>
+                                        <td>
+                                            <Link to={`/horarioedit/${horario.id_horarios}`} className="btn btn-warning btn-sm me-2">Editar</Link>
+                                            <button onClick={() => handleDelete(horario.id_horarios)} className="btn btn-danger btn-sm">Eliminar</button>
+                                        </td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td colSpan="4" className="text-center">No se encontraron resultados</td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
+                </div>
 
-            <div className="d-flex justify-content-end">
-                {currentPage > 1 && (
-                    <button onClick={prevPage} className="btn btn-primary me-2">⬅</button>
-                )}
-                {indexOfLastHorario < filteredHorarios.length && (
-                    <button onClick={nextPage} className="btn btn-primary">➡</button>
-                )}
-            </div><br /><br />
+                <div className="d-flex justify-content-between mb-4">
+                    <button onClick={prevPage} disabled={currentPage === 1} className="btn btn-secondary">
+                        <i className="bi bi-arrow-left"></i> Anterior
+                    </button>
+                    <button onClick={nextPage} disabled={indexOfLastHorario >= filteredHorarios.length} className="btn btn-secondary">
+                        Siguiente <i className="bi bi-arrow-right"></i>
+                    </button>
+                </div>
 
-            <div className="chart-container" style={{ width: '80%', margin: 'auto', paddingTop: '20px' }}>
-                <Bar data={prepareBarChartData()} options={{ responsive: true }} />
+                <div className="mb-4">
+                    <Bar data={prepareBarChartData()} options={{ responsive: true }} />
+                </div>
             </div>
+
+            <footer className="bg-dark text-white text-center p-3">
+                <p className="mb-0">Aviso de privacidad: Este sitio cumple con las normativas de protección de datos.</p>
+            </footer>
         </div>
     );
 }
